@@ -1,0 +1,22 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"dev": "tsc -w",
+		"test": "jest --verbose",
+		"build": "rm -rf lib && tsc"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"jest": "^29.5.0",
+		"ts-jest": "^29.1.0",
+		"typescript": "^5.0.3"
+	},
+	"dependencies": {
+		"@jest/globals": "^29.5.0",
+		"zod": "^3.21.4"
+	}
+}

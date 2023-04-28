@@ -1,0 +1,16 @@
+{
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		"*/**/*.js": true,
+		"**/**/*.d.ts": true,
+		"**/node_modules": true,
+    "lib": true,
+	},
+	"editor.formatOnType": true,
+	"editor.formatOnSave": true
+}
