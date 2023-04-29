@@ -12,6 +12,5 @@
 	},
 	"compileOnSave": true,
 	"include": ["."],
-	"exclude": ["node_modules", "lib"],
-	"extends": "./tsconfig.paths.json"
+	"exclude": ["node_modules", "lib"]
 }
