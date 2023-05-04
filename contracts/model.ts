@@ -21,25 +21,6 @@ export const FieldOptions = z.object({
 
 export const FieldValidation = z.object({})
 
-// export const FieldTypeString = z.object({
-// 	type: z.literal("string"),
-// 	style: z.nativeEnum(Enum),
-// 	options: FieldOptions,
-// 	validations: z.intersection(
-// 		FieldValidation,
-// 		z.object({
-// 			required: z.boolean().optional().default(false),
-// 			unique: z.boolean().optional().default(false),
-// 			pattern: z.string().optional(),
-// 		})
-// 	),
-// })
-
-// export const FieldTypeBoolean = z.object({
-// 	type: z.literal("boolean"),
-// 	style: z.enum(["boolean"]),
-// })
-
 export const Field = z.intersection(
 	Base,
 	z.object({
@@ -68,5 +49,3 @@ export type FieldOptions = z.TypeOf<typeof FieldOptions>
 export type FieldValidation = z.TypeOf<typeof FieldValidation>
 export type FieldType = z.TypeOf<typeof FieldType>
 export type FieldStyle = z.TypeOf<typeof FieldStyle>
-// export type FieldTypeString = z.TypeOf<FieldTypeString>
-// export type FieldTypeBoolean = z.TypeOf<typeof FieldTypeBoolean>
