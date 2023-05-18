@@ -10,8 +10,13 @@ export const UserRole = z.intersection(
 )
 
 export const UserProfile = z.object({
-	first_name: z.string(),
-	last_name: z.string().optional(),
+	first_name: z
+		.string()
+		.min(2, "first name must contain at least 2 characters"),
+	last_name: z
+		.string()
+		.min(2, "last name must contain at least 2 characters")
+		.optional(),
 	picture: z.string().optional(),
 })
 
@@ -26,8 +31,11 @@ export const User = z.intersection(
 )
 
 export const CreateUserData = z.object({
-	username: z.string(),
-	email: z.string(),
+	username: z.string().min(4, "username must contain at least 4 characters"),
+	email: z
+		.string()
+		.min(1, "This field has to be filled.")
+		.email("this is not a valid email"),
 	password: z.string().optional(),
 	profile: UserProfile,
 })
