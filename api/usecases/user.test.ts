@@ -1,20 +1,20 @@
-import { expect, test } from "@jest/globals"
-import { create } from "./user"
-import { userRepository } from "../repositories/user"
-import { uuid } from "../adapters/uuid"
+import { describe, expect, test } from "@jest/globals"
+import { createUserUsecaseFactoryMemory } from "../factories/user"
 
-test("Should create user with success", async () => {
-	const result = await create(
-		userRepository,
-		uuid
-	)({
-		email: "email@test.com",
-		profile: {
-			first_name: "Jose",
-		},
-		username: "luzes",
+describe("user usecase", () => {
+	test("should create user with success", async () => {
+		const result = await createUserUsecaseFactoryMemory({
+			email: "teste@email",
+			profile: {
+				first_name: "John Doe",
+			},
+			username: "JohnDoe",
+		})
+
+		expect(result.username).toEqual("JohnDoe")
+		expect(result.id).toBeDefined()
+		expect(result.password).toBeUndefined()
+
+		console.log("create user usecase", JSON.stringify(result, null, 2))
 	})
-
-	console.log(result)
-	expect(true).toEqual(true)
 })
