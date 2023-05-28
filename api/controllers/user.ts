@@ -1,4 +1,4 @@
-import { CreateUserData } from "../../contracts/user"
+import { CreateUserData, User } from "../../contracts/user"
 import { Controller } from "../domain/protocols/controller"
 import { badRequest, ok } from "../helpers/http"
 import { createUserUsecase } from "../usecases/user"
@@ -13,7 +13,7 @@ export const createUserValidation = (input: CreateUserData) => {
 export const createUserController =
 	(
 		createUsecase: ReturnType<typeof createUserUsecase>
-	): Controller<CreateUserData> =>
+	): Controller<CreateUserData, User> =>
 	async (request) => {
 		const error = createUserValidation(request!)
 		if (error) return badRequest(error)

@@ -15,6 +15,6 @@ describe("user usecase", () => {
 		expect(result.id).toBeDefined()
 		expect(result.password).toBeUndefined()
 
-		console.log("create user usecase", JSON.stringify(result, null, 2))
+		// console.log("create user usecase", JSON.stringify(result, null, 2))
 	})
 })
