@@ -5,7 +5,7 @@
 	"main": "server.js",
 	"scripts": {
 		"dev": "tsc -w",
-		"test": "jest --verbose",
+		"test": "jest",
 		"build": "rm -rf lib && tsc"
 	},
 	"author": "",
