@@ -24,5 +24,4 @@ export const createUserController =
 //#endregion
 
 //#region update user
-
 //#endregion
