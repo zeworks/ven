@@ -1,15 +1,16 @@
-import { CreateUserData, UpdateUserData } from "../../contracts/user"
+import { UpdateUserData } from "../../contracts/user"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import {
 	CreateUserUseCaseFn,
 	GetUserByIdUseCaseFn,
 	UpdateUserUseCaseFn,
 } from "../domain/usecases/user"
+import { createUserValidation } from "../factories/user"
 
 export const createUserUsecase: CreateUserUseCaseFn =
 	(repository, uuid) => async (request) => {
-		const validation = CreateUserData.safeParse(request)
-		if (!validation.success) return validationErrorHandler(validation) as any
+		const invalidPayloadError = createUserValidation(request)
+		if (invalidPayloadError) return invalidPayloadError as any
 
 		return repository.create({
 			...request,
@@ -26,6 +27,7 @@ export const updateUserUsecase: UpdateUserUseCaseFn =
 
 		// load user, if not found, returns null
 		const user = await loadUser(repo)(data.id)
+		// TODO: should throw an error
 		if (!user) return null
 
 		// return the update response

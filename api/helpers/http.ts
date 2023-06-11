@@ -14,3 +14,8 @@ export const noContent = (): HttpResponse => ({
 	data: null,
 	statusCode: HttpStatusCode.NoContent,
 })
+
+export const serverError = (error: any): HttpResponse => ({
+	data: error,
+	statusCode: HttpStatusCode.ServerError,
+})
