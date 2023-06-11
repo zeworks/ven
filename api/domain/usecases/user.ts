@@ -8,7 +8,8 @@ export type CreateUserUseCase = {
 
 export type CreateUserUseCaseFn = (
 	repository: UserRepository,
-	uuid: UUID
+	uuid: UUID,
+	getByUsername: ReturnType<GetUserByUsernameUseCaseFn>
 ) => (data: CreateUserData) => Promise<User>
 
 export type GetUserByIdUseCase = {
@@ -18,6 +19,10 @@ export type GetUserByIdUseCase = {
 export type GetUserByIdUseCaseFn = (
 	repo: UserRepository
 ) => (id: string) => Promise<User | null>
+
+export type GetUserByUsernameUseCaseFn = (
+	repo: UserRepository
+) => (username: string) => Promise<User | null>
 
 export type UpdateUserUseCase = {
 	update: UpdateUserUseCaseFn

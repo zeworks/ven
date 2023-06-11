@@ -7,7 +7,6 @@ export const userMemoryRepository: UserRepository & { users?: User[] } = {
 	async create(data) {
 		const newUser = { ...data, createdAt: new Date() }
 		this.users?.push(newUser)
-
 		return newUser
 	},
 
@@ -15,8 +14,12 @@ export const userMemoryRepository: UserRepository & { users?: User[] } = {
 		return this.users?.find((u) => u.id === id) || null
 	},
 
+	async getUsername(username) {
+		return this.users?.find((u) => u.username === username) || null
+	},
+
 	async update(data, id) {
 		const user = this.users?.find((u) => u.id === id) || {}
-		return Object.assign(user, data)
+		return Object.assign({}, user, data)
 	},
 }

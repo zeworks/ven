@@ -1,11 +1,21 @@
 import { describe, expect, test } from "@jest/globals"
 import { createUserUsecaseFactoryMemory } from "../factories/user"
-import { getUserByIdUsecase, updateUserUsecase } from "./user"
+import {
+	createUserUsecase,
+	getUserByIdUsecase,
+	getUserByUsernameUsecase,
+	updateUserUsecase,
+} from "./user"
 import { userMemoryRepository } from "../repositories/user.memory"
 import {
 	ERROR_USER_EMAIL_INVALID,
 	ERROR_USER_USERNAME_MINLENGTH,
 } from "../../contracts/user"
+import {
+	DuplicatedUsernameError,
+	InvalidUserError,
+} from "../domain/errors/user"
+import { uuid } from "../adapters/uuid"
 
 describe("user usecase", () => {
 	test("should create user with success", async () => {
@@ -57,6 +67,7 @@ describe("user usecase", () => {
 		// )
 	})
 
+	// TODO: update user use case
 	test("should update user with success", async () => {
 		const user = await userMemoryRepository.create({
 			id: "1",
@@ -72,9 +83,58 @@ describe("user usecase", () => {
 			getUserByIdUsecase
 		)({
 			...user,
-			username: "1",
+			username: "Joasdasd",
 		})
 
-		// console.log("update user usecase", JSON.stringify(result, null, 2))
+		expect(result.email).toEqual(user.email)
+		expect(result.createdAt).toEqual(user.createdAt)
+		expect(result.username).not.toEqual(user.username)
+
+		// console.log(
+		// 	"should update user with success",
+		// 	JSON.stringify({ result, user }, null, 2)
+		// )
+	})
+
+	test("should throw an error, if user not found, on update", async () => {
+		const user = await userMemoryRepository.create({
+			id: "1",
+			email: "sd@dd.com",
+			profile: {
+				first_name: "123123",
+			},
+			username: "joasdna",
+		})
+
+		expect(
+			updateUserUsecase(
+				userMemoryRepository,
+				getUserByIdUsecase
+			)({
+				...user,
+				id: "123",
+				username: "112312",
+			})
+		).rejects.toThrow(InvalidUserError)
+	})
+
+	test("should throw an error if duplicated username", async () => {
+		await createUserUsecaseFactoryMemory({
+			email: "teste@email.com",
+			profile: {
+				first_name: "John Doe",
+			},
+			username: "JohnDoe",
+		})
+
+		expect(
+			createUserUsecaseFactoryMemory({
+				email: "teste@email.com",
+				profile: {
+					first_name: "John Doe",
+				},
+				username: "JohnDoe",
+			})
+		).rejects.toThrow(DuplicatedUsernameError)
 	})
 })

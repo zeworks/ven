@@ -5,5 +5,6 @@ export type UserRepository = {
 	update: (data: UpdateUserData, id: string) => Promise<User>
 	// delete: (id: string) => Promise<boolean>
 	get: (id: string) => Promise<User | null>
+	getUsername: (username: string) => Promise<User | null>
 	// list: () => Promise<Array<User>>
 }

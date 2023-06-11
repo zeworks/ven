@@ -15,6 +15,10 @@ export const userRepository: UserRepository & { users?: User[] } = {
 		return this.users?.find((u) => u.id === id) || null
 	},
 
+	async getUsername(username) {
+		return this.users?.find((u) => u.username === username) || null
+	},
+
 	async update(data, id) {
 		const user = this.users?.find((u) => u.id === id) || {}
 
