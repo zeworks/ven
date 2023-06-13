@@ -1,11 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
 import { createUserUsecaseFactoryMemory } from "../factories/user"
-import {
-	createUserUsecase,
-	getUserByIdUsecase,
-	getUserByUsernameUsecase,
-	updateUserUsecase,
-} from "./user"
+import { getUserByIdUsecase, updateUserUsecase } from "./user"
 import { userMemoryRepository } from "../repositories/user.memory"
 import {
 	ERROR_USER_EMAIL_INVALID,
@@ -15,9 +10,8 @@ import {
 	DuplicatedUsernameError,
 	InvalidUserError,
 } from "../domain/errors/user"
-import { uuid } from "../adapters/uuid"
 
-describe("CREATE USER", () => {
+describe("[USECASE] CREATE USER", () => {
 	test("should create user with success", async () => {
 		const result = await createUserUsecaseFactoryMemory({
 			email: "teste@email.com",
@@ -90,7 +84,7 @@ describe("CREATE USER", () => {
 	})
 })
 
-describe("UPDATE USER", () => {
+describe("[USECASE] UPDATE USER", () => {
 	// TODO: update user use case
 	test("should update user with success", async () => {
 		const user = await userMemoryRepository.create({

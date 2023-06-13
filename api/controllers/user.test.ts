@@ -5,7 +5,7 @@ import {
 	ERROR_USER_USERNAME_MINLENGTH,
 } from "../../contracts/user"
 
-describe("CREATE USER", () => {
+describe("[CONTROLLER] CREATE USER", () => {
 	test("create user with success", async () => {
 		const result = await createUserControllerFactoryMemory({
 			email: "ss@dd.com",
