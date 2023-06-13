@@ -1,4 +1,4 @@
-import { CreateUserData, User } from "../../../contracts/user"
+import { CreateUserData, User } from "../../../contracts/src/user"
 import { Controller } from "../protocols/controller"
 import { Validation } from "../protocols/validation"
 import { CreateUserUseCaseFn } from "../usecases/user"

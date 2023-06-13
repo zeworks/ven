@@ -1,6 +1,10 @@
 import { UserRepository } from "../repositories/user"
 import { UUID } from "../protocols/uuid"
-import { CreateUserData, UpdateUserData, User } from "../../../contracts/user"
+import {
+	CreateUserData,
+	UpdateUserData,
+	User,
+} from "../../../contracts/src/user"
 
 export type CreateUserUseCase = {
 	create: CreateUserUseCaseFn

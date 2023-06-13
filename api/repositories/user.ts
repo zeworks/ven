@@ -1,4 +1,4 @@
-import { User } from "../../contracts/user"
+import { User } from "../../contracts/src/user"
 import { UserRepository } from "../domain/repositories/user"
 
 export const userRepository: UserRepository & { users?: User[] } = {

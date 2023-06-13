@@ -5,7 +5,7 @@ import { userMemoryRepository } from "../repositories/user.memory"
 import {
 	ERROR_USER_EMAIL_INVALID,
 	ERROR_USER_USERNAME_MINLENGTH,
-} from "../../contracts/user"
+} from "../../contracts/src/user"
 import {
 	DuplicatedUsernameError,
 	InvalidUserError,

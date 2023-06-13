@@ -1,4 +1,4 @@
-import { CreateUserData } from "../../contracts/user"
+import { CreateUserData } from "../../contracts/src/user"
 import { uuid } from "../adapters/uuid"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import { createUserController } from "../controllers/user"

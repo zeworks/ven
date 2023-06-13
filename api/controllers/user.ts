@@ -1,4 +1,4 @@
-import { CreateUserData } from "../../contracts/user"
+import { CreateUserData } from "../../contracts/src/user"
 import { badRequest, ok, serverError } from "../helpers/http"
 import { CreateUserControllerRequest } from "../domain/controllers/user"
 

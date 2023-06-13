@@ -1,4 +1,8 @@
-import { CreateUserData, UpdateUserData, User } from "../../../contracts/user"
+import {
+	CreateUserData,
+	UpdateUserData,
+	User,
+} from "../../../contracts/src/user"
 
 export type UserRepository = {
 	create: (data: CreateUserData & { id: string }) => Promise<User>
