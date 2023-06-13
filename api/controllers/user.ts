@@ -6,11 +6,6 @@ import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import { Validation } from "../domain/protocols/validation"
 
 //#region create user
-export const createUserValidation: Validation = (input) => {
-	const result = CreateUserData.safeParse(input)
-	if (!result.success) return validationErrorHandler(result)
-}
-
 export const createUserController =
 	(
 		createUsecase: ReturnType<typeof createUserUsecase>,

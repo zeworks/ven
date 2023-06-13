@@ -24,7 +24,7 @@ export const createUserUsecase: CreateUserUseCaseFn =
 		// TODO: validate if the username, email already exists on DB
 		// if not, create, otherwise throw the error
 		const usernameFound = await loadUsername(request.username)
-		if (usernameFound) throw new DuplicatedUsernameError()
+		if (!!usernameFound) throw new DuplicatedUsernameError()
 
 		return repository.create({
 			...request,

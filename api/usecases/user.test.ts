@@ -17,7 +17,7 @@ import {
 } from "../domain/errors/user"
 import { uuid } from "../adapters/uuid"
 
-describe("user usecase", () => {
+describe("CREATE USER", () => {
 	test("should create user with success", async () => {
 		const result = await createUserUsecaseFactoryMemory({
 			email: "teste@email.com",
@@ -67,6 +67,30 @@ describe("user usecase", () => {
 		// )
 	})
 
+	test("should throw an error if duplicated username", async () => {
+		await createUserUsecaseFactoryMemory({
+			email: "teste@email.com",
+			profile: {
+				first_name: "John Doe",
+			},
+			username: "JohnDoe2",
+		})
+
+		try {
+			await createUserUsecaseFactoryMemory({
+				email: "teste@email.com",
+				profile: {
+					first_name: "John Doe",
+				},
+				username: "JohnDoe",
+			})
+		} catch (error) {
+			expect(error).toEqual(new DuplicatedUsernameError())
+		}
+	})
+})
+
+describe("UPDATE USER", () => {
 	// TODO: update user use case
 	test("should update user with success", async () => {
 		const user = await userMemoryRepository.create({
@@ -116,25 +140,5 @@ describe("user usecase", () => {
 				username: "112312",
 			})
 		).rejects.toThrow(InvalidUserError)
-	})
-
-	test("should throw an error if duplicated username", async () => {
-		await createUserUsecaseFactoryMemory({
-			email: "teste@email.com",
-			profile: {
-				first_name: "John Doe",
-			},
-			username: "JohnDoe",
-		})
-
-		expect(
-			createUserUsecaseFactoryMemory({
-				email: "teste@email.com",
-				profile: {
-					first_name: "John Doe",
-				},
-				username: "JohnDoe",
-			})
-		).rejects.toThrow(DuplicatedUsernameError)
 	})
 })
