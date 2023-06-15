@@ -1,4 +1,4 @@
-import { UpdateUserData } from "../../contracts/src/user"
+import { UpdateUserData } from "@ven/contracts/lib/user"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import {
 	DuplicatedUsernameError,
