@@ -7,6 +7,7 @@ import {
 	ERROR_USER_USERNAME_MINLENGTH,
 } from "../../contracts/src/user"
 import {
+	DuplicatedEmailError,
 	DuplicatedUsernameError,
 	InvalidUserError,
 } from "../domain/errors/user"
@@ -63,7 +64,7 @@ describe("[USECASE] CREATE USER", () => {
 
 	test("should throw an error if duplicated username", async () => {
 		await createUserUsecaseFactoryMemory({
-			email: "teste@email.com",
+			email: "teste1@email.com",
 			profile: {
 				first_name: "John Doe",
 			},
@@ -72,7 +73,7 @@ describe("[USECASE] CREATE USER", () => {
 
 		try {
 			await createUserUsecaseFactoryMemory({
-				email: "teste@email.com",
+				email: "teste2@email.com",
 				profile: {
 					first_name: "John Doe",
 				},
@@ -80,6 +81,28 @@ describe("[USECASE] CREATE USER", () => {
 			})
 		} catch (error) {
 			expect(error).toEqual(new DuplicatedUsernameError())
+		}
+	})
+
+	test("should throw an error if duplicated email", async () => {
+		await createUserUsecaseFactoryMemory({
+			email: "teste3@email.com",
+			profile: {
+				first_name: "John Doe",
+			},
+			username: "JohnDoe3",
+		})
+
+		try {
+			await createUserUsecaseFactoryMemory({
+				email: "teste3@email.com",
+				profile: {
+					first_name: "John Doe",
+				},
+				username: "JohnDo4",
+			})
+		} catch (error) {
+			expect(error).toEqual(new DuplicatedEmailError())
 		}
 	})
 })

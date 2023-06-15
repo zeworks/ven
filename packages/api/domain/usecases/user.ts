@@ -13,7 +13,8 @@ export type CreateUserUseCase = {
 export type CreateUserUseCaseFn = (
 	repository: UserRepository,
 	uuid: UUID,
-	getByUsername: ReturnType<GetUserByUsernameUseCaseFn>
+	getByUsername: ReturnType<GetUserByUsernameUseCaseFn>,
+	getByEmail: ReturnType<GetEmailUsecaseFn>
 ) => (data: CreateUserData) => Promise<User>
 
 export type GetUserByIdUseCase = {
@@ -27,6 +28,14 @@ export type GetUserByIdUseCaseFn = (
 export type GetUserByUsernameUseCaseFn = (
 	repo: UserRepository
 ) => (username: string) => Promise<User | null>
+
+export type GetEmailUsecase = {
+	getEmail: GetEmailUsecaseFn
+}
+
+export type GetEmailUsecaseFn = (
+	repo: UserRepository
+) => (email: string) => Promise<User | null>
 
 export type UpdateUserUseCase = {
 	update: UpdateUserUseCaseFn

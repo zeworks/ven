@@ -1,11 +1,13 @@
 import { UpdateUserData } from "@ven/contracts/lib/user"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import {
+	DuplicatedEmailError,
 	DuplicatedUsernameError,
 	InvalidUserError,
 } from "../domain/errors/user"
 import {
 	CreateUserUseCaseFn,
+	GetEmailUsecaseFn,
 	GetUserByIdUseCaseFn,
 	GetUserByUsernameUseCaseFn,
 	UpdateUserUseCaseFn,
@@ -17,14 +19,15 @@ export const ERROR_DUPLICATED_USERNAME = new Error(
 )
 
 export const createUserUsecase: CreateUserUseCaseFn =
-	(repository, uuid, loadUsername) => async (request) => {
+	(repository, uuid, loadUsername, getEmail) => async (request) => {
 		const invalidPayloadError = createUserValidation(request)
 		if (invalidPayloadError) return invalidPayloadError as any
 
-		// TODO: validate if the username, email already exists on DB
-		// if not, create, otherwise throw the error
 		const usernameFound = await loadUsername(request.username)
 		if (!!usernameFound) throw new DuplicatedUsernameError()
+
+		const emailFound = await getEmail(request.email)
+		if (!!emailFound) throw new DuplicatedEmailError()
 
 		return repository.create({
 			...request,
@@ -53,3 +56,6 @@ export const getUserByIdUsecase: GetUserByIdUseCaseFn = (repo) => (id) =>
 export const getUserByUsernameUsecase: GetUserByUsernameUseCaseFn =
 	(repo) => (username) =>
 		repo.getUsername(username)
+
+export const getByEmailUsecase: GetEmailUsecaseFn = (repo) => (email) =>
+	repo.getEmail(email)
