@@ -2,7 +2,7 @@ import { CreateUserData } from "../../contracts/src/user"
 import { uuid } from "../adapters/uuid"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import { createUserController } from "../controllers/user"
-import { Validation } from "../domain/protocols/validation"
+import { Validation } from "../protocols/validation"
 import { userRepository } from "../repositories/user"
 import { userMemoryRepository } from "../repositories/user.memory"
 import {

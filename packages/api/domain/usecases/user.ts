@@ -1,5 +1,5 @@
 import { UserRepository } from "../repositories/user"
-import { UUID } from "../protocols/uuid"
+import { UUID } from "../../protocols/uuid"
 import {
 	CreateUserData,
 	UpdateUserData,
