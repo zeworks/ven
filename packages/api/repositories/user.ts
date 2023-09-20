@@ -26,8 +26,6 @@ export const userRepository: UserRepository & { users?: User[] } = {
 	async update(data, id) {
 		const user = this.users?.find((u) => u.id === id) || {}
 
-		return Object.assign(user, {
-			...data,
-		})
+		return Object.assign({}, user, data)
 	},
 }
