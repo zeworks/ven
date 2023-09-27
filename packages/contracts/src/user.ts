@@ -40,7 +40,6 @@ export const User = Base.merge(
 			.email(ERROR_USER_EMAIL_INVALID),
 		password: z.string().optional(),
 		profile: Profile,
-		access_token: z.string().optional(),
 		status: Status.default("INACTIVE").optional(),
 	})
 )
