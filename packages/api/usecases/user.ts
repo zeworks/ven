@@ -13,13 +13,15 @@ import {
 	UpdateUserUseCaseFn,
 } from "../domain/usecases/user"
 import { createUserValidation } from "../factories/user"
+import { uuid } from "../adapters/uuid"
+import { hash } from "../adapters/hash"
 
 export const ERROR_DUPLICATED_USERNAME = new Error(
 	"this username already exists"
 )
 
 export const createUserUsecase: CreateUserUseCaseFn =
-	(repository, uuid, loadUsername, getEmail) => async (request) => {
+	(repository, loadUsername, getEmail) => async (request) => {
 		const invalidPayloadError = createUserValidation(request)
 		if (invalidPayloadError) return invalidPayloadError as any
 
@@ -29,9 +31,14 @@ export const createUserUsecase: CreateUserUseCaseFn =
 		const emailFound = await getEmail(request.email)
 		if (!!emailFound) throw new DuplicatedEmailError()
 
+		const password = !request.password
+			? await hash(request.email, 8)
+			: request.password
+
 		return repository.create({
 			...request,
 			id: uuid.generate(),
+			password,
 			status: request.status || "INACTIVE",
 		})
 	}

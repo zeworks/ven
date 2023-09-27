@@ -24,8 +24,6 @@ describe("[USECASE] CREATE USER", () => {
 
 		expect(result.username).toEqual("JohnDoe")
 		expect(result.id).toBeDefined()
-		expect(result.password).toBeUndefined()
-
 		// console.log("create user usecase", JSON.stringify(result, null, 2))
 	})
 
@@ -104,6 +102,41 @@ describe("[USECASE] CREATE USER", () => {
 		} catch (error) {
 			expect(error).toEqual(new DuplicatedEmailError())
 		}
+	})
+
+	test("should return password hashed based on the user email", async () => {
+		const result = await createUserUsecaseFactoryMemory({
+			email: "johnDoe@mail.com",
+			profile: {
+				first_name: "John Doe",
+			},
+			username: "JohnDo4",
+		})
+
+		expect(result.password).toBeDefined()
+		// console.log(
+		// 	"should return password hashed based on the user email",
+		// 	JSON.stringify(result, null, 2)
+		// )
+	})
+
+	test("should return password created by the user", async () => {
+		const result = await createUserUsecaseFactoryMemory({
+			email: "johnDoee@mail.com",
+			profile: {
+				first_name: "John Doe",
+			},
+			password: "#12.#33",
+			username: "JohnDo4e",
+		})
+
+		expect(result.password).toBeDefined()
+		expect(result.password).toEqual("#12.#33")
+
+		// console.log(
+		// 	"should return password created by the user",
+		// 	JSON.stringify(result, null, 2)
+		// )
 	})
 })
 
