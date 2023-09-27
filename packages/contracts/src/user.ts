@@ -1,5 +1,6 @@
 import { z } from "zod"
 import { Base } from "./base"
+import { Project } from "./project"
 
 //#region error messages
 export const ERROR_USER_ROLE_NAME_REQUIRED = "field name is required"
@@ -29,7 +30,9 @@ export const Profile = z.object({
 	picture: z.string().optional(),
 })
 
-export const Status = z.enum(["ACTIVE", "INACTIVE", "BLOCKED"])
+export const Status = z
+	.enum(["ACTIVE", "INACTIVE", "BLOCKED"])
+	.default("INACTIVE")
 
 export const User = Base.merge(
 	z.object({
@@ -40,7 +43,8 @@ export const User = Base.merge(
 			.email(ERROR_USER_EMAIL_INVALID),
 		password: z.string().optional(),
 		profile: Profile,
-		status: Status.default("INACTIVE").optional(),
+		status: Status.optional(),
+		projects: z.array(Project).optional(),
 	})
 )
 
