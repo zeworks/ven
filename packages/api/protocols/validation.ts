@@ -1,1 +1,1 @@
-export type Validation = (req?: any) => Error | undefined
+export type Validation<T = any> = (req?: T) => Error | undefined

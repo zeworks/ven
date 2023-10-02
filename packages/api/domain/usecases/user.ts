@@ -1,5 +1,4 @@
 import { UserRepository } from "../repositories/user"
-import { UUID } from "../../protocols/uuid"
 import {
 	CreateUserData,
 	UpdateUserData,
@@ -12,7 +11,6 @@ export type CreateUserUseCase = {
 
 export type CreateUserUseCaseFn = (
 	repository: UserRepository,
-	uuid: UUID,
 	getByUsername: ReturnType<GetUserByUsernameUseCaseFn>,
 	getByEmail: ReturnType<GetEmailUsecaseFn>
 ) => (data: CreateUserData) => Promise<User>

@@ -1,5 +1,4 @@
 import { CreateUserData } from "../../contracts/src/user"
-import { uuid } from "../adapters/uuid"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import { createUserController } from "../controllers/user"
 import { Validation } from "../protocols/validation"
@@ -33,13 +32,11 @@ export const getUserByEmailUsecaseFactoryMemory =
 //#region create user factories
 export const createUserUsecaseFactory = createUserUsecase(
 	userRepository,
-	uuid,
 	getUserByUsernameUsecaseFactory,
 	getUserByEmailUsecaseFactory
 )
 export const createUserUsecaseFactoryMemory = createUserUsecase(
 	userMemoryRepository,
-	uuid,
 	getUserByUsernameUsecaseFactoryMemory,
 	getUserByEmailUsecaseFactoryMemory
 )
