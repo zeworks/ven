@@ -3,7 +3,7 @@ import { createUserControllerFactoryMemory } from "../factories/user"
 import {
 	ERROR_USER_EMAIL_INVALID,
 	ERROR_USER_USERNAME_MINLENGTH,
-} from "../../contracts/src/user"
+} from "@ven/contracts/dist/user"
 
 describe("[CONTROLLER] CREATE USER", () => {
 	test("create user with success", async () => {

@@ -1,12 +1,13 @@
-import { User } from "../../contracts/src/user"
+import { User } from "@ven/contracts/dist/user"
 import { UserRepository } from "../domain/repositories/user"
 
-export const userMemoryRepository: UserRepository & { users?: User[] } = {
+export const userRepository: UserRepository & { users?: User[] } = {
 	users: [],
 
 	async create(data) {
 		const newUser = { ...data, createdAt: new Date() }
 		this.users?.push(newUser)
+
 		return newUser
 	},
 
@@ -24,6 +25,7 @@ export const userMemoryRepository: UserRepository & { users?: User[] } = {
 
 	async update(data, id) {
 		const user = this.users?.find((u) => u.id === id) || {}
+
 		return Object.assign({}, user, data)
 	},
 }

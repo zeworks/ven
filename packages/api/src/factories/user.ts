@@ -1,4 +1,4 @@
-import { CreateUserData } from "../../contracts/src/user"
+import { CreateUserData } from "@ven/contracts/dist/user"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import { createUserController } from "../controllers/user"
 import { Validation } from "../protocols/validation"

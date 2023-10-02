@@ -1,9 +1,5 @@
 import { UserRepository } from "../repositories/user"
-import {
-	CreateUserData,
-	UpdateUserData,
-	User,
-} from "../../../contracts/src/user"
+import { CreateUserData, UpdateUserData, User } from "@ven/contracts/dist/user"
 
 export type CreateUserUseCase = {
 	create: CreateUserUseCaseFn

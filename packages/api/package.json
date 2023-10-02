@@ -6,12 +6,13 @@
 	"scripts": {
 		"dev": "tsc -w",
 		"test": "jest",
-		"build": "tsc"
+		"build": "rm -rf dist && tsc"
 	},
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.0",
+		"@types/node": "^20.8.0",
 		"@types/uuid": "^9.0.1",
 		"@ven/contracts": "workspace:*",
 		"bcrypt": "^5.1.1",
