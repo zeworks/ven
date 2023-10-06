@@ -8,6 +8,7 @@
 		"declaration": true,
 		"strictNullChecks": true,
 		"moduleResolution": "node",
+		"esModuleInterop": true,
 		"outDir": "./dist"
 	},
 	"compileOnSave": true,
