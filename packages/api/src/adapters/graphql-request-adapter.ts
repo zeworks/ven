@@ -16,6 +16,12 @@ export const graphqlRequestAdapter = async <T = any, C = any>(
 
 	const response = await controller(request, requestContext)
 
+	// log response
+	console.info({
+		request,
+		response,
+	})
+
 	switch (response.statusCode) {
 		case 200:
 		case 204:
