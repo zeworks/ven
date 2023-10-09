@@ -1,9 +1,12 @@
-import { graphqlRequestAdapter } from "./adapters/graphql-request-adapter"
+import { graphqlControllerAdapter } from "./adapters/graphql-controller-adapter"
 import { testController } from "../controllers/test-controller"
+import { graphqlResponseAdapter } from "./adapters/graphql-response-adapter"
 
 export default {
 	Query: {
-		hello: (_: any, input: any, context: any) =>
-			graphqlRequestAdapter(testController, input, context),
+		hello: async (_: any, input: any, context: any) =>
+			graphqlResponseAdapter(
+				await graphqlControllerAdapter(testController)(input, context)
+			),
 	},
 }
