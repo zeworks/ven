@@ -1,4 +1,4 @@
-import { Controller } from "../protocols/controller"
+import { Controller } from "../../protocols/controller"
 
 export const graphqlRequestAdapter = async <T = any, C = any>(
 	controller: Controller,

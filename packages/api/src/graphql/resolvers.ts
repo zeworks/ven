@@ -1,4 +1,4 @@
-import { graphqlRequestAdapter } from "../adapters/graphql-request-adapter"
+import { graphqlRequestAdapter } from "./adapters/graphql-request-adapter"
 import { testController } from "../controllers/test-controller"
 
 export default {
