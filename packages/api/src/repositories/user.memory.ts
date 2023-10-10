@@ -26,4 +26,8 @@ export const userMemoryRepository: UserRepository & { users?: User[] } = {
 		const user = this.users?.find((u) => u.id === id) || {}
 		return Object.assign({}, user, data)
 	},
+
+	async list() {
+		return this.users || []
+	},
 }

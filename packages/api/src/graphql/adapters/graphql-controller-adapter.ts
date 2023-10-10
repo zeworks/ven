@@ -13,5 +13,7 @@ export const graphqlControllerAdapter =
 			accountId: (context as any)?.request?.accountId,
 		}
 
+		console.info(JSON.stringify({ request }))
+
 		return controller(request, requestContext)
 	}

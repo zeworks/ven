@@ -3,6 +3,7 @@ import mercurius from "mercurius"
 import resolvers from "./graphql/resolvers"
 import schema from "./graphql/schema"
 import { makeExecutableSchema } from "@graphql-tools/schema"
+import "dotenv/config"
 
 const HTTP_PORT = process.env.PORT || 4000
 
@@ -13,7 +14,7 @@ const app = Fastify({
 app.register(mercurius, {
 	schema: makeExecutableSchema({ typeDefs: schema }),
 	resolvers,
-	graphiql: "graphiql",
+	graphiql: process.env.NODE_ENV === "development" ? "graphiql" : false,
 })
 
 const start = () => {

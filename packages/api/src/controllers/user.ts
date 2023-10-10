@@ -1,6 +1,10 @@
 import { CreateUserData } from "@ven/contracts/dist/user"
-import { badRequest, ok, serverError } from "../helpers/http"
-import { CreateUserControllerRequest } from "../domain/controllers/user"
+import { badRequest, noContent, ok, serverError } from "../helpers/http"
+import {
+	CreateUserControllerRequest,
+	GetAllUsersControllerRequest,
+	GetUserByIdControllerRequest,
+} from "../domain/controllers/user"
 
 //#region create user
 export const createUserController: CreateUserControllerRequest =
@@ -17,5 +21,26 @@ export const createUserController: CreateUserControllerRequest =
 	}
 //#endregion
 
-//#region update user
-//#endregion
+export const getUserByIdController: GetUserByIdControllerRequest =
+	(getUserByIdUsecase) => async (request) => {
+		try {
+			const result = await getUserByIdUsecase(request?.id!)
+			if (!result) return noContent()
+
+			return ok(result)
+		} catch (error) {
+			return serverError(error)
+		}
+	}
+
+export const getUsersController: GetAllUsersControllerRequest =
+	(getUsersUsecase) => async () => {
+		try {
+			const result = await getUsersUsecase()
+			if (!result) return noContent()
+
+			return ok(result)
+		} catch (error) {
+			return serverError(error)
+		}
+	}

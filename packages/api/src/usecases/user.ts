@@ -7,6 +7,7 @@ import {
 } from "../domain/errors/user"
 import {
 	CreateUserUseCaseFn,
+	GetAllUsecaseFn,
 	GetEmailUsecaseFn,
 	GetUserByIdUseCaseFn,
 	GetUserByUsernameUseCaseFn,
@@ -66,3 +67,5 @@ export const getUserByUsernameUsecase: GetUserByUsernameUseCaseFn =
 
 export const getByEmailUsecase: GetEmailUsecaseFn = (repo) => (email) =>
 	repo.getEmail(email)
+
+export const getAllUsecase: GetAllUsecaseFn = (repo) => () => repo.list()

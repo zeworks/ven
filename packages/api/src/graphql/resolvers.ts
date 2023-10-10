@@ -1,12 +1,15 @@
-import { graphqlControllerAdapter } from "./adapters/graphql-controller-adapter"
-import { testController } from "../controllers/test-controller"
-import { graphqlResponseAdapter } from "./adapters/graphql-response-adapter"
+import {
+	createUserResolver,
+	getUserByIdResolver,
+	getUsersResolver,
+} from "./resolvers/user"
 
 export default {
 	Query: {
-		hello: async (_: any, input: any, context: any) =>
-			graphqlResponseAdapter(
-				await graphqlControllerAdapter(testController)(input, context)
-			),
+		getUsers: getUsersResolver,
+		getUserById: getUserByIdResolver,
+	},
+	Mutation: {
+		createUser: createUserResolver,
 	},
 }

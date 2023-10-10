@@ -31,6 +31,14 @@ export type GetEmailUsecaseFn = (
 	repo: UserRepository
 ) => (email: string) => Promise<User | null>
 
+export type GetAllUsecase = {
+	getAll: GetAllUsecaseFn
+}
+
+export type GetAllUsecaseFn = (
+	repo: UserRepository
+) => () => Promise<Array<User>>
+
 export type UpdateUserUseCase = {
 	update: UpdateUserUseCaseFn
 }

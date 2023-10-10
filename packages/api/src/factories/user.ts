@@ -1,11 +1,16 @@
 import { CreateUserData } from "@ven/contracts/dist/user"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
-import { createUserController } from "../controllers/user"
+import {
+	createUserController,
+	getUserByIdController,
+	getUsersController,
+} from "../controllers/user"
 import { Validation } from "../protocols/validation"
 import { userRepository } from "../repositories/user"
 import { userMemoryRepository } from "../repositories/user.memory"
 import {
 	createUserUsecase,
+	getAllUsecase,
 	getByEmailUsecase,
 	getUserByIdUsecase,
 	getUserByUsernameUsecase,
@@ -16,6 +21,12 @@ import {
 export const getUserByIdUsecaseFactory = getUserByIdUsecase(userRepository)
 export const getUserByIdUsecaseFactoryMemory =
 	getUserByIdUsecase(userMemoryRepository)
+export const getUserByIdControllerFactory = getUserByIdController(
+	getUserByIdUsecaseFactory
+)
+export const getUserByIdControllerFactoryMemory = getUserByIdController(
+	getUserByIdUsecaseFactoryMemory
+)
 
 // get by username
 export const getUserByUsernameUsecaseFactory =
@@ -27,6 +38,16 @@ export const getUserByUsernameUsecaseFactoryMemory =
 export const getUserByEmailUsecaseFactory = getByEmailUsecase(userRepository)
 export const getUserByEmailUsecaseFactoryMemory =
 	getByEmailUsecase(userMemoryRepository)
+
+// get all users
+export const getUsersUsecaseFactory = getAllUsecase(userRepository)
+export const getUsersUsecaseFactoryMemory = getAllUsecase(userMemoryRepository)
+export const getUsersControllerFactory = getUsersController(
+	getUsersUsecaseFactory
+)
+export const getUsersControllerFactoryMemory = getUsersController(
+	getUsersUsecaseFactoryMemory
+)
 //#endregion
 
 //#region create user factories

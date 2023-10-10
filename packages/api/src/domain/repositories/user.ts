@@ -7,5 +7,5 @@ export type UserRepository = {
 	get: (id: string) => Promise<User | null>
 	getUsername: (username: string) => Promise<User | null>
 	getEmail: (email: string) => Promise<User | null>
-	// list: () => Promise<Array<User>>
+	list: () => Promise<Array<User>>
 }

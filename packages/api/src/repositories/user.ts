@@ -28,4 +28,8 @@ export const userRepository: UserRepository & { users?: User[] } = {
 
 		return Object.assign({}, user, data)
 	},
+
+	async list() {
+		return this.users || []
+	},
 }
