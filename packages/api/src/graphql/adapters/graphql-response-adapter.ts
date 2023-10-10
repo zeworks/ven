@@ -1,4 +1,4 @@
-import { HttpResponse } from "../../protocols/http"
+import { HttpResponse } from "../../domain/protocols/http"
 
 export const graphqlResponseAdapter = (
 	response: HttpResponse

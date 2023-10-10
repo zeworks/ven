@@ -1,5 +1,5 @@
-import { Controller } from "../../protocols/controller"
-import { HttpResponse } from "../../protocols/http"
+import { Controller } from "../../domain/protocols/controller"
+import { HttpResponse } from "../../domain/protocols/http"
 
 export const graphqlControllerAdapter =
 	<T = any, C = any>(controller: Controller) =>
@@ -14,6 +14,7 @@ export const graphqlControllerAdapter =
 		}
 
 		console.info(JSON.stringify({ request }))
+		console.info(requestContext)
 
 		return controller(request, requestContext)
 	}

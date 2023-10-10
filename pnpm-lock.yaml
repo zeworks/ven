@@ -23,6 +23,9 @@ importers:
       '@graphql-tools/schema':
         specifier: ^10.0.0
         version: 10.0.0(graphql@16.8.1)
+      '@graphql-tools/utils':
+        specifier: ^10.0.6
+        version: 10.0.6(graphql@16.8.1)
       '@types/bcrypt':
         specifier: ^5.0.0
         version: 5.0.0

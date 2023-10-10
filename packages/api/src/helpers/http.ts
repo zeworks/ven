@@ -1,4 +1,4 @@
-import { HttpResponse, HttpStatusCode } from "../protocols/http"
+import { HttpResponse, HttpStatusCode } from "../domain/protocols/http"
 
 export const ok = (data: any): HttpResponse => ({
 	statusCode: HttpStatusCode.Ok,

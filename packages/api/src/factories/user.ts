@@ -5,7 +5,7 @@ import {
 	getUserByIdController,
 	getUsersController,
 } from "../controllers/user"
-import { Validation } from "../protocols/validation"
+import { Validation } from "../domain/protocols/validation"
 import { userRepository } from "../repositories/user"
 import { userMemoryRepository } from "../repositories/user.memory"
 import {

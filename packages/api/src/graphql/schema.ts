@@ -1,31 +1,17 @@
 import { gql } from "graphql-tag"
+import { GRAPHQL_USERS_SCHEMA } from "./schemas/user"
 
 export default gql`
-	type User {
-		id: String!
-		email: String!
-	}
-
-	input CreateProfileInput {
-		first_name: String!
-		last_name: String
-		picture: String
-	}
-
-	input CreateUserInput {
-		email: String!
-		password: String
-		profile: CreateProfileInput!
-		username: String!
-	}
+	scalar DateTime
+	directive @auth on FIELD_DEFINITION | FIELD
 
 	type Query {
 		_: String
-		getUsers: [User]
-		getUserById(id: String!): User
 	}
 
 	type Mutation {
-		createUser(input: CreateUserInput!): User
+		_: String
 	}
+
+	${GRAPHQL_USERS_SCHEMA}
 ` as any
