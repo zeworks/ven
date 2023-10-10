@@ -14,7 +14,6 @@ export const graphqlControllerAdapter =
 		}
 
 		console.info(JSON.stringify({ request }))
-		console.info(requestContext)
 
 		return controller(request, requestContext)
 	}
