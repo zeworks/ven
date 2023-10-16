@@ -9,7 +9,7 @@ const router = createBrowserRouter(routes)
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<ThemeProvider defaultTheme="system" storageKey="ven-dtheme">
+		<ThemeProvider defaultTheme="light" storageKey="ven-dtheme">
 			<RouterProvider router={router} />
 		</ThemeProvider>
 	</React.StrictMode>
