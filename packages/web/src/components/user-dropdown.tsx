@@ -1,4 +1,3 @@
-import { User } from "@ven/contracts/dist/user"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -11,12 +10,11 @@ import {
 import { Button } from "./ui/button"
 import { Avatar, AvatarImage } from "./ui/avatar"
 import { Link } from "react-router-dom"
+import { useSessionProvider } from "@/providers/session"
 
-interface Props {
-	data?: User
-}
+export default function UserDropdown() {
+	const { session, clearSession } = useSessionProvider()
 
-export default function UserDropdown({ data }: Props) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -25,7 +23,7 @@ export default function UserDropdown({ data }: Props) {
 					className="relative h-8 w-8 select-none rounded-full bg-primary/10"
 				>
 					<Avatar className="h-8 w-8">
-						<AvatarImage src={data?.profile.picture} alt="user profile" />
+						<AvatarImage src={session?.profile.picture} alt="user profile" />
 					</Avatar>
 				</Button>
 			</DropdownMenuTrigger>
@@ -33,10 +31,12 @@ export default function UserDropdown({ data }: Props) {
 				<DropdownMenuLabel className="font-normal">
 					<div className="flex flex-col space-y-2">
 						<p className="text-sm font-medium leading-none">
-							{[data?.profile.first_name, data?.profile.last_name].join(" ")}
+							{[session?.profile.first_name, session?.profile.last_name].join(
+								" "
+							)}
 						</p>
 						<p className="text-xs leading-none text-muted-foreground">
-							{data?.email}
+							{session?.email}
 						</p>
 					</div>
 				</DropdownMenuLabel>
@@ -58,7 +58,7 @@ export default function UserDropdown({ data }: Props) {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem asChild>
-						<div>Sign Out</div>
+						<div onClick={clearSession}>Sign Out</div>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
