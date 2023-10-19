@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom"
+
 export default function Error() {
 	return (
 		<div className="bg-background grid h-screen px-4 place-content-center">
@@ -25,7 +28,11 @@ export default function Error() {
 					Uh-oh!
 				</h1>
 
-				<p className="mt-4 text-gray-500">We can't find that page.</p>
+				<p className="my-4 text-gray-500">We can't find that page.</p>
+
+				<Link to="/">
+					<Button>back to home</Button>
+				</Link>
 			</div>
 		</div>
 	)
