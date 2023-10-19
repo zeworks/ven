@@ -5,6 +5,7 @@ import SignUp from "@/screens/auth/signup"
 import AuthLayout from "@/layouts/auth"
 import AppLayout from "@/layouts/app"
 import ErrorNotFound from "@/screens/error-404"
+import ErrorBoundary from "@/screens/error-boundary"
 
 type Route = RouteObject & {
 	isPrivate?: boolean
@@ -29,6 +30,7 @@ export const routes: Route[] = [
 		path: "/",
 		isPrivate: true,
 		element: <AppLayout />,
+		errorElement: <ErrorBoundary />,
 		children: [
 			{
 				path: "/",

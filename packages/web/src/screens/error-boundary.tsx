@@ -1,7 +1,8 @@
-// import { useRouteError } from "react-router-dom"
+import { useRouteError } from "react-router-dom"
 
 export default function ErrorBoundary() {
-	// const error = useRouteError() as unknown as Error
+	const error = useRouteError()
+	console.error(error)
 
 	return (
 		<div className="h-screen flex flex-col justify-center items-center bg-gray-100">
