@@ -27,7 +27,7 @@ export function Header() {
 					size="icon"
 					onClick={toggleTheme}
 				>
-					{theme === "dark" ? <CiLight /> : <CiDark />}
+					{theme === "dark" ? <CiDark /> : <CiLight />}
 				</Button>
 				<UserDropdown />
 			</div>
