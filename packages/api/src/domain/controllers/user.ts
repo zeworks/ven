@@ -4,6 +4,7 @@ import { Validation } from "../protocols/validation"
 import {
 	CreateUserUseCaseFn,
 	GetAllUsecaseFn,
+	GetEmailUsecaseFn,
 	GetUserByIdUseCaseFn,
 } from "../usecases/user"
 
@@ -19,3 +20,7 @@ export type GetAllUsersControllerRequest = (
 export type GetUserByIdControllerRequest = (
 	getUserByIdUsecase: ReturnType<GetUserByIdUseCaseFn>
 ) => Controller<{ id: string }, User>
+
+export type GetUserByEmailControllerRequest = (
+	getByEmail: ReturnType<GetEmailUsecaseFn>
+) => Controller<{ email: string }, User>

@@ -65,7 +65,7 @@ export const getUserByUsernameUsecase: GetUserByUsernameUseCaseFn =
 	(repo) => (username) =>
 		repo.getUsername(username)
 
-export const getByEmailUsecase: GetEmailUsecaseFn = (repo) => (email) =>
+export const getByEmailUsecase: GetEmailUsecaseFn = (repo) => async (email) =>
 	repo.getEmail(email)
 
 export const getAllUsecase: GetAllUsecaseFn = (repo) => () => repo.list()

@@ -41,6 +41,7 @@ export const GRAPHQL_USERS_SCHEMA = gql`
 	extend type Query {
 		getUsers: [User]
 		getUserById(id: String!): User
+		getUserByEmail(email: String!): User
 	}
 
 	extend type Mutation {

@@ -2,6 +2,7 @@ import { CreateUserData } from "@ven/contracts/dist/user"
 import { validationErrorHandler } from "../adapters/validationErrorHandler"
 import {
 	createUserController,
+	getUserByEmailController,
 	getUserByIdController,
 	getUsersController,
 } from "../controllers/user"
@@ -38,6 +39,12 @@ export const getUserByUsernameUsecaseFactoryMemory =
 export const getUserByEmailUsecaseFactory = getByEmailUsecase(userRepository)
 export const getUserByEmailUsecaseFactoryMemory =
 	getByEmailUsecase(userMemoryRepository)
+export const getUserByEmailControllerFactory = getUserByEmailController(
+	getUserByEmailUsecaseFactory
+)
+export const getUserByEmailControllerFactoryMemory = getUserByEmailController(
+	getUserByEmailUsecaseFactoryMemory
+)
 
 // get all users
 export const getUsersUsecaseFactory = getAllUsecase(userRepository)

@@ -6,6 +6,7 @@ import { graphqlResponseAdapter } from "../adapters/graphql-response-adapter"
 import { graphqlControllerAdapter } from "../adapters/graphql-controller-adapter"
 import {
 	createUserControllerFactoryMemory,
+	getUserByEmailControllerFactoryMemory,
 	getUserByIdControllerFactoryMemory,
 	getUsersControllerFactoryMemory,
 } from "../../factories/user"
@@ -31,6 +32,18 @@ export const getUsersResolver: GraphqlResolver = async (_, input, context) =>
 export const getUserByIdResolver: GraphqlResolver = async (_, input, context) =>
 	graphqlResponseAdapter(
 		await graphqlControllerAdapter(getUserByIdControllerFactoryMemory)(
+			input,
+			context
+		)
+	)
+
+export const getUserByEmailResolver: GraphqlResolver = async (
+	_,
+	input,
+	context
+) =>
+	graphqlResponseAdapter(
+		await graphqlControllerAdapter(getUserByEmailControllerFactoryMemory)(
 			input,
 			context
 		)
