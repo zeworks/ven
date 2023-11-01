@@ -1,0 +1,29 @@
+query GetUsers {
+	users: getUsers {
+		id
+		email
+		status
+		username
+		createdAt
+		profile {
+			first_name
+			last_name
+			picture
+		}
+	}
+}
+
+mutation CreateUser($variables: CreateUserInput!) {
+	user: createUser(input: $variables) {
+		id
+		email
+		status
+		username
+		createdAt
+		profile {
+			first_name
+			last_name
+			picture
+		}
+	}
+}
