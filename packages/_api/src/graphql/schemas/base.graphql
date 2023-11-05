@@ -1,0 +1,10 @@
+scalar DateTime
+directive @auth on FIELD_DEFINITION | FIELD
+
+type Query {
+	_: String
+}
+
+type Mutation {
+	_: String
+}

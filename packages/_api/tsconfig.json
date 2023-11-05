@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "CommonJS",
+		"allowJs": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"declaration": true,
+		"strictNullChecks": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"outDir": "./dist"
+	},
+	"compileOnSave": true,
+	"include": ["src"],
+	"exclude": ["node_modules", "dist"]
+}
