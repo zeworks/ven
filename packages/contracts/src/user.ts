@@ -1,11 +1,10 @@
 import { z } from "zod"
 import { Base } from "./base"
 import { Project } from "./project"
+import { ERROR_EMAIL_INVALID, ERROR_EMAIL_REQUIRED } from "./errors"
 
 //#region error messages
 export const ERROR_USER_ROLE_NAME_REQUIRED = "field name is required"
-export const ERROR_USER_EMAIL_REQUIRED = "field email is required"
-export const ERROR_USER_EMAIL_INVALID = "this is not a valid email"
 export const ERROR_USER_FIRSTNAME_MINLENGTH =
 	"first name must contain at least 2 characters"
 export const ERROR_USER_LASTNAME_MINLENGTH =
@@ -37,10 +36,7 @@ export const Status = z
 export const User = Base.merge(
 	z.object({
 		username: z.string().min(4, ERROR_USER_USERNAME_MINLENGTH),
-		email: z
-			.string()
-			.min(1, ERROR_USER_EMAIL_REQUIRED)
-			.email(ERROR_USER_EMAIL_INVALID),
+		email: z.string().min(1, ERROR_EMAIL_REQUIRED).email(ERROR_EMAIL_INVALID),
 		password: z.string().optional(),
 		profile: Profile,
 		status: Status.optional(),
