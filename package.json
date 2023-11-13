@@ -1,6 +1,7 @@
 {
   "name": "ven",
   "scripts": {
-    "dev": "pnpm --parallel run dev"
+    "dev": "pnpm --parallel run dev",
+    "build": "pnpm --parallel run build"
   }
 }
