@@ -20,12 +20,12 @@
 		"mercurius": "^13.2.2",
 		"prisma": "^4.4.0",
 		"tsnd": "^1.1.0",
-		"tsx": "^3.13.0",
-		"typescript": "^4.8.3",
+		"tsx": "^4.1.2",
+		"typescript": "^5.2.2",
 		"vitest": "^0.34.6"
 	},
 	"scripts": {
-		"dev": "tsx watch src/main/server.ts",
+		"dev": "tsc -w & tsx watch src/main/server.ts",
 		"start:server": "NODE_ENV=production ts-node dist/main/server.js",
 		"test:verbose": "vitest run --reporter verbose",
 		"test": "vitest run",

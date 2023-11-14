@@ -1,8 +1,9 @@
 import { Role } from "@/domain/entities/role"
 import { UnauthorizedError } from "@/presentation/errors/unauthorized-error"
-import { serverError } from "@/presentation/helpers/http"
+import { ok, serverError } from "@/presentation/helpers/http"
 import { Controller } from "@/presentation/protocols/controller"
 import { HttpResponse } from "@/presentation/protocols/http"
+import { MercuriusContext } from "mercurius"
 
 export class AclDecorator implements Controller {
 	constructor(
@@ -10,8 +11,12 @@ export class AclDecorator implements Controller {
 		private readonly permissionKey: string
 	) {}
 
-	async execute(request?: any, context?: any): Promise<HttpResponse<any>> {
-		const userRole = context.accountRole as Role
+	async execute(
+		request?: any,
+		context?: MercuriusContext
+	): Promise<HttpResponse<any>> {
+		const userRole = (context as any)?.accountRole as Role
+
 		const userPermission = userRole?.permissions?.find(
 			(p: any) => p.key === this.permissionKey
 		)

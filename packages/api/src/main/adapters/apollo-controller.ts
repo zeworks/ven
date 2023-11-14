@@ -5,35 +5,56 @@ import {
 	UserInputError,
 	ForbiddenError,
 } from "apollo-server"
+import { MercuriusContext } from "mercurius"
+import { makeAuthMiddleware } from "../factories/middlewares/auth-middleware-factory"
+import { HttpResponse } from "@/presentation/protocols/http"
 
-export async function apolloControllerAdapter<Args = any, Context = any>(
-	controller: Controller,
-	args?: Args,
-	context?: Context
-): Promise<any> {
-	const request = {
-		...(args || {}),
-	}
-
-	const requestContext = {
-		...(context || {}),
-		accountId: (context as any)?.reply.request?.accountId,
-		accountRole: (context as any)?.reply.request?.accountRole,
-	}
-
-	const httpResponse = await controller.execute(request, requestContext)
-
-	switch (httpResponse.statusCode) {
+const validateHttpResponse = (http: HttpResponse) => {
+	switch (http.statusCode) {
 		case 200:
 		case 204:
-			return httpResponse.data
+			return http.data
 		case 400:
-			throw new UserInputError(httpResponse.data.message)
+			throw new UserInputError(http.data.message)
 		case 401:
-			throw new AuthenticationError(httpResponse.data.message)
+			throw new AuthenticationError(http.data.message)
 		case 403:
-			throw new ForbiddenError(httpResponse.data.message)
+			throw new ForbiddenError(http.data.message)
 		default:
-			throw new ApolloError(httpResponse.data.message)
+			throw new ApolloError(http.data.message)
 	}
+}
+
+export async function apolloControllerAdapter<RequestInput = any>(
+	controller: Controller,
+	request?: RequestInput,
+	context?: MercuriusContext,
+	useAuthentication: boolean = false
+): Promise<any> {
+	const _request = {
+		...(request || {}),
+	}
+
+	let _context: any = context
+
+	if (useAuthentication) {
+		const token = context?.reply?.request?.headers?.["authorization"]
+
+		const middlewareResponse = await makeAuthMiddleware().handle({
+			accessToken: token,
+		})
+
+		if (!middlewareResponse.data?.accountId) {
+			return validateHttpResponse(middlewareResponse)
+		}
+
+		_context = {
+			accountRole: middlewareResponse.data?.accountRole,
+			accountId: middlewareResponse.data?.accountId,
+		}
+	}
+
+	const httpResponse = await controller.execute(_request, _context)
+
+	return validateHttpResponse(httpResponse)
 }

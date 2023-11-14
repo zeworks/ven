@@ -12,8 +12,6 @@ export class LoadAccountsController implements Controller {
 		async () => {
 			try {
 				const accounts = await this.loadAccountsUseCase.loadAccounts()
-				console.log({ accounts })
-
 				return ok(accounts || [])
 			} catch (error: any) {
 				return serverError(error)

@@ -2,6 +2,7 @@ import { makeAuthMiddleware } from "@/main/factories/middlewares/auth-middleware
 import { getDirective, MapperKind, mapSchema } from "@graphql-tools/utils"
 import { ForbiddenError } from "apollo-server-express"
 import { GraphQLSchema } from "graphql"
+import { MercuriusContext } from "mercurius"
 
 export const authDirectiveTransformer = (
 	schema: GraphQLSchema
@@ -12,17 +13,24 @@ export const authDirectiveTransformer = (
 
 			if (hasAuthDirective) {
 				const { resolve } = fieldConfig
-				fieldConfig.resolve = async (parent, args, context, info) => {
+
+				fieldConfig.resolve = async (
+					parent,
+					args,
+					context: MercuriusContext,
+					info
+				) => {
 					const request = {
-						accessToken: context?.req?.headers?.["authorization"],
+						accessToken: context?.reply?.request?.headers?.["authorization"],
 					}
 
 					const httpResponse = await makeAuthMiddleware().handle(request)
+
 					if (httpResponse.statusCode === 200) {
-						Object.assign(context?.req, httpResponse.data)
+						Object.assign(context, httpResponse.data)
 						return resolve?.call(this, parent, args, context, info)
 					} else {
-						throw new ForbiddenError(httpResponse.data.message)
+						throw new ForbiddenError((httpResponse?.data as any)?.message)
 					}
 				}
 			}

@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server"
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import resolvers from "./resolvers"
-import typeDefs from "./type-defs"
+import typeDefs from "./schemas"
 import { ApolloServerPluginLandingPageDisabled } from "apollo-server-core/dist/plugin"
 import { authDirectiveTransformer } from "./directives/auth-directive"
 import ApolloErrors from "./plugins/errors"

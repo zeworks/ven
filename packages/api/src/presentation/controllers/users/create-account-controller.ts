@@ -14,8 +14,6 @@ export class CreateAccountController implements Controller {
 	async execute(
 		request: CreateAccountController.RequestInput
 	): Promise<HttpResponse<CreateAccountController.Result>> {
-		console.log(request, 122111)
-
 		const errors = this.createAccountValidation.validate(request.input)
 		if (errors) return badRequest(errors)
 
