@@ -1,5 +1,5 @@
-import { PermissionsEntity } from "../../entities/permission"
-import { RolesEntity } from "../../entities/role"
+import { Permission } from "../../entities/permission"
+import { Role } from "../../entities/role"
 
 export type CreateRoleUseCaseFunction = (
 	input: CreateRoleUseCase.Params
@@ -15,8 +15,8 @@ export namespace CreateRoleUseCase {
 		key: string
 		name: string
 		status?: boolean
-		permissions?: PermissionsEntity[] | null
+		permissions?: Permission[] | null
 	}
 
-	export type Result = RolesEntity | null
+	export type Result = Role | null
 }

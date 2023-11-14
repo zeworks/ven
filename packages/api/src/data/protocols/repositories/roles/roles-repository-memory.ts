@@ -1,4 +1,4 @@
-import { RolesEntity } from "@/domain/entities/role"
+import { Role } from "@/domain/entities/role"
 import { CreateRoleUseCase } from "@/domain/usecases/roles/create-role"
 import { LoadRoleByKeyUseCaseFunction } from "@/domain/usecases/roles/load-role-by-key"
 import { CheckRoleByKeyRepository } from "./check-role-by-key-respository"
@@ -11,7 +11,7 @@ export class InMemoryRolesRepository
 		CheckRoleByKeyRepository,
 		LoadRoleByKeyRepository
 {
-	roles: RolesEntity[] = []
+	roles: Role[] = []
 
 	create = async (
 		params: CreateRoleUseCase.Params

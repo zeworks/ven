@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"description": "### How to setup: --- ### How to run: ---",
 	"author": "ven",
-	"main": "index.js",
+	"main": "src/main/server.ts",
 	"license": "MIT",
 	"devDependencies": {
 		"@faker-js/faker": "^7.5.0",
@@ -19,13 +19,13 @@
 		"fastify": "^4.24.3",
 		"mercurius": "^13.2.2",
 		"prisma": "^4.4.0",
+		"tsnd": "^1.1.0",
 		"tsx": "^3.13.0",
 		"typescript": "^4.8.3",
 		"vitest": "^0.34.6"
 	},
 	"scripts": {
-		"dev": "NODE_ENV=development tsx watch src/main/server.ts",
-		"dev:server": "NODE_ENV=development tsnd --respawn --transpile-only src/main/server.ts",
+		"dev": "tsx watch src/main/server.ts",
 		"start:server": "NODE_ENV=production ts-node dist/main/server.js",
 		"test:verbose": "vitest run --reporter verbose",
 		"test": "vitest run",

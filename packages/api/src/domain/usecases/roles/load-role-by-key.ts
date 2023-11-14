@@ -1,4 +1,4 @@
-import { RolesEntity } from "@/domain/entities/role"
+import { Role } from "@/domain/entities/role"
 
 export type LoadRoleByKeyUseCaseFunction = (
 	key?: string
@@ -9,5 +9,5 @@ export interface LoadRoleByKeyUseCase {
 }
 
 export namespace LoadRoleByKeyUseCase {
-	export type Result = RolesEntity | null
+	export type Result = Role | null
 }

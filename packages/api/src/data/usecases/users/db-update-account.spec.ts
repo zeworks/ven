@@ -47,7 +47,6 @@ test("Should update first name and password", async () => {
 		const result = await dbUpdateAccount.update(account.id, {
 			...account,
 			role: account.role?.id,
-			department: account.department?.id,
 			profile: {
 				firstName: "José",
 			},
@@ -96,7 +95,6 @@ test("Should update the username", async () => {
 		const result = await dbUpdateAccount.update(account.id, {
 			...account,
 			role: account.role?.id,
-			department: account.department?.id,
 			username: "teste",
 		})
 
@@ -150,7 +148,6 @@ test("Should throw an error if username is already in use", async () => {
 			dbUpdateAccount.update(account.id, {
 				...account,
 				role: account.role?.id,
-				department: account.department?.id,
 				username: oldAccount?.username,
 			})
 		).rejects.toThrow(new UsernameInUseError())
