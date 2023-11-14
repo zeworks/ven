@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "query GetUsers {\n  users: getUsers {\n    id\n    email\n    status\n    username\n    createdAt\n    profile {\n      first_name\n      last_name\n      picture\n    }\n  }\n}\n\nmutation CreateUser($variables: CreateUserInput!) {\n  user: createUser(input: $variables) {\n    id\n    email\n    status\n    username\n    createdAt\n    profile {\n      first_name\n      last_name\n      picture\n    }\n  }\n}": types.GetUsersDocument,
+    "query Accounts {\n  accounts {\n    total\n    data {\n      id\n      email\n      username\n      status\n    }\n  }\n}": types.AccountsDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query GetUsers {\n  users: getUsers {\n    id\n    email\n    status\n    username\n    createdAt\n    profile {\n      first_name\n      last_name\n      picture\n    }\n  }\n}\n\nmutation CreateUser($variables: CreateUserInput!) {\n  user: createUser(input: $variables) {\n    id\n    email\n    status\n    username\n    createdAt\n    profile {\n      first_name\n      last_name\n      picture\n    }\n  }\n}"): (typeof documents)["query GetUsers {\n  users: getUsers {\n    id\n    email\n    status\n    username\n    createdAt\n    profile {\n      first_name\n      last_name\n      picture\n    }\n  }\n}\n\nmutation CreateUser($variables: CreateUserInput!) {\n  user: createUser(input: $variables) {\n    id\n    email\n    status\n    username\n    createdAt\n    profile {\n      first_name\n      last_name\n      picture\n    }\n  }\n}"];
+export function graphql(source: "query Accounts {\n  accounts {\n    total\n    data {\n      id\n      email\n      username\n      status\n    }\n  }\n}"): (typeof documents)["query Accounts {\n  accounts {\n    total\n    data {\n      id\n      email\n      username\n      status\n    }\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

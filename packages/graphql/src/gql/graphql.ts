@@ -17,86 +17,153 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
-export type CreateProfileInput = {
-  first_name: Scalars['String']['input'];
-  last_name?: InputMaybe<Scalars['String']['input']>;
-  picture?: InputMaybe<Scalars['String']['input']>;
+export type Authentication = {
+  __typename?: 'Authentication';
+  accessToken: Scalars['String']['output'];
 };
 
-export type CreateUserInput = {
+export type ClientId = {
+  id: Scalars['String']['input'];
+};
+
+export type CreateAccount = {
   email: Scalars['String']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
-  profile: CreateProfileInput;
-  status?: InputMaybe<Status>;
+  profile: CreateUserProfileInput;
+  role?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
   username: Scalars['String']['input'];
+};
+
+export type CreateRoleInput = {
+  key: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  permissions?: InputMaybe<Array<InputMaybe<PermissionInput>>>;
+  status?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type CreateUserProfileInput = {
+  firstName: Scalars['String']['input'];
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  picture?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   _?: Maybe<Scalars['String']['output']>;
-  createUser?: Maybe<User>;
+  createAccount?: Maybe<User>;
+  createAuthentication?: Maybe<Authentication>;
+  createRole?: Maybe<Role>;
+  deleteAccount?: Maybe<Scalars['Boolean']['output']>;
+  deleteAuthentication?: Maybe<Scalars['Boolean']['output']>;
+  updateAccount?: Maybe<User>;
 };
 
 
-export type MutationCreateUserArgs = {
-  input: CreateUserInput;
+export type MutationCreateAccountArgs = {
+  input?: InputMaybe<CreateAccount>;
 };
 
-export type Profile = {
-  __typename?: 'Profile';
-  first_name: Scalars['String']['output'];
-  last_name?: Maybe<Scalars['String']['output']>;
-  picture?: Maybe<Scalars['String']['output']>;
+
+export type MutationCreateAuthenticationArgs = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationCreateRoleArgs = {
+  input?: InputMaybe<CreateRoleInput>;
+};
+
+
+export type MutationDeleteAccountArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateAccountArgs = {
+  id: Scalars['String']['input'];
+  input: UpdateAccountInput;
+};
+
+export type Permission = {
+  __typename?: 'Permission';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  key: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  parent?: Maybe<Scalars['String']['output']>;
+  status: Scalars['Boolean']['output'];
+};
+
+export type PermissionInput = {
+  id: Scalars['String']['input'];
 };
 
 export type Query = {
   __typename?: 'Query';
   _?: Maybe<Scalars['String']['output']>;
-  getUserByEmail?: Maybe<User>;
-  getUserById?: Maybe<User>;
-  getUsers?: Maybe<Array<Maybe<User>>>;
+  account?: Maybe<User>;
+  accounts?: Maybe<UsersDatatable>;
+  me?: Maybe<User>;
 };
 
 
-export type QueryGetUserByEmailArgs = {
-  email: Scalars['String']['input'];
-};
-
-
-export type QueryGetUserByIdArgs = {
+export type QueryAccountArgs = {
   id: Scalars['String']['input'];
 };
 
-export enum Status {
-  Active = 'ACTIVE',
-  Blocked = 'BLOCKED',
-  Inactive = 'INACTIVE'
-}
+export type Role = {
+  __typename?: 'Role';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  key: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  permissions?: Maybe<Array<Maybe<Permission>>>;
+  status?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type UpdateAccountInput = {
+  password?: InputMaybe<Scalars['String']['input']>;
+  profile?: InputMaybe<UpdateUserProfileInput>;
+  role?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateUserProfileInput = {
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  picture?: InputMaybe<Scalars['String']['input']>;
+};
 
 export type User = {
   __typename?: 'User';
-  createdAt: Scalars['DateTime']['output'];
+  accessToken?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  password?: Maybe<Scalars['String']['output']>;
-  profile: Profile;
-  status?: Maybe<Status>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  profile?: Maybe<UserProfile>;
+  role?: Maybe<Role>;
+  status?: Maybe<Scalars['Boolean']['output']>;
   username: Scalars['String']['output'];
 };
 
-export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserProfile = {
+  __typename?: 'UserProfile';
+  firstName: Scalars['String']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
+  picture?: Maybe<Scalars['String']['output']>;
+};
+
+export type UsersDatatable = {
+  __typename?: 'UsersDatatable';
+  data?: Maybe<Array<Maybe<User>>>;
+  total?: Maybe<Scalars['Int']['output']>;
+};
+
+export type AccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: string, email: string, status?: Status | null, username: string, createdAt: any, profile: { __typename?: 'Profile', first_name: string, last_name?: string | null, picture?: string | null } } | null> | null };
-
-export type CreateUserMutationVariables = Exact<{
-  variables: CreateUserInput;
-}>;
+export type AccountsQuery = { __typename?: 'Query', accounts?: { __typename?: 'UsersDatatable', total?: number | null, data?: Array<{ __typename?: 'User', id: string, email: string, username: string, status?: boolean | null } | null> | null } | null };
 
 
-export type CreateUserMutation = { __typename?: 'Mutation', user?: { __typename?: 'User', id: string, email: string, status?: Status | null, username: string, createdAt: any, profile: { __typename?: 'Profile', first_name: string, last_name?: string | null, picture?: string | null } } | null };
-
-
-export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"users"},"name":{"kind":"Name","value":"getUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"first_name"}},{"kind":"Field","name":{"kind":"Name","value":"last_name"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}}]}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
-export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"variables"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateUserInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"user"},"name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"variables"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"first_name"}},{"kind":"Field","name":{"kind":"Name","value":"last_name"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}}]}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
+export const AccountsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Accounts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<AccountsQuery, AccountsQueryVariables>;
