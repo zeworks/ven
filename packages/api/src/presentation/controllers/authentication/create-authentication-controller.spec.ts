@@ -9,9 +9,9 @@ import { BcryptAdapter } from "@/infra/cryptography/bcrypt-adapter"
 import { JwtAdapter } from "@/infra/cryptography/jwt-adapter"
 import { UuidAdapter } from "@/infra/cryptography/uuid"
 import { makeCreateAuthenticationValidation } from "@/main/factories/controllers/authentication/create-authentication-controller-validation"
-import { makeCreateAccountValidation } from "@/main/factories/controllers/users/create-account-validation-factory"
+import { makeCreateAccountValidation } from "@/main/factories/controllers/account/create-account-validation-factory"
 import { expect, test } from "vitest"
-import { CreateAccountController } from "../users/create-account-controller"
+import { CreateAccountController } from "../account/create-account-controller"
 import { CreateAuthenticationController } from "./create-authentication-controller"
 
 const usersRepository = new InMemoryUsersRepository()

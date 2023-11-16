@@ -60,5 +60,6 @@ extend type Mutation {
 extend type Query {
 	accounts: UsersDatatable @auth
 	account(id: String!): User @auth
+	accountByEmail(email: String!): User @auth
 	me: User @auth
 }

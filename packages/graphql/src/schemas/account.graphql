@@ -1,0 +1,42 @@
+query Accounts {
+	accounts {
+		total
+		data {
+			id
+			username
+			email
+			status
+			profile {
+				firstName
+				lastName
+				picture
+			}
+			role {
+				id
+				name
+				key
+				status
+			}
+		}
+	}
+}
+
+mutation CreateAccount($input: CreateAccount) {
+	createAccount(input: $input) {
+		id
+		username
+		email
+		status
+		profile {
+			firstName
+			lastName
+			picture
+		}
+		role {
+			id
+			name
+			key
+			status
+		}
+	}
+}

@@ -13,7 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "query Accounts {\n  accounts {\n    total\n    data {\n      id\n      email\n      username\n      status\n    }\n  }\n}": types.AccountsDocument,
+    "query Accounts {\n  accounts {\n    total\n    data {\n      id\n      username\n      email\n      status\n      profile {\n        firstName\n        lastName\n        picture\n      }\n      role {\n        id\n        name\n        key\n        status\n      }\n    }\n  }\n}\n\nmutation CreateAccount($input: CreateAccount) {\n  createAccount(input: $input) {\n    id\n    username\n    email\n    status\n    profile {\n      firstName\n      lastName\n      picture\n    }\n    role {\n      id\n      name\n      key\n      status\n    }\n  }\n}": types.AccountsDocument,
+    "query Authentication {\n  me {\n    id\n    username\n    email\n    status\n    accessToken\n    profile {\n      firstName\n      lastName\n      picture\n    }\n    role {\n      id\n      name\n      key\n      status\n    }\n  }\n}\n\nmutation CreateAuthentication($email: String, $password: String) {\n  createAuthentication(email: $email, password: $password) {\n    accessToken\n  }\n}": types.AuthenticationDocument,
 };
 
 /**
@@ -33,7 +34,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query Accounts {\n  accounts {\n    total\n    data {\n      id\n      email\n      username\n      status\n    }\n  }\n}"): (typeof documents)["query Accounts {\n  accounts {\n    total\n    data {\n      id\n      email\n      username\n      status\n    }\n  }\n}"];
+export function graphql(source: "query Accounts {\n  accounts {\n    total\n    data {\n      id\n      username\n      email\n      status\n      profile {\n        firstName\n        lastName\n        picture\n      }\n      role {\n        id\n        name\n        key\n        status\n      }\n    }\n  }\n}\n\nmutation CreateAccount($input: CreateAccount) {\n  createAccount(input: $input) {\n    id\n    username\n    email\n    status\n    profile {\n      firstName\n      lastName\n      picture\n    }\n    role {\n      id\n      name\n      key\n      status\n    }\n  }\n}"): (typeof documents)["query Accounts {\n  accounts {\n    total\n    data {\n      id\n      username\n      email\n      status\n      profile {\n        firstName\n        lastName\n        picture\n      }\n      role {\n        id\n        name\n        key\n        status\n      }\n    }\n  }\n}\n\nmutation CreateAccount($input: CreateAccount) {\n  createAccount(input: $input) {\n    id\n    username\n    email\n    status\n    profile {\n      firstName\n      lastName\n      picture\n    }\n    role {\n      id\n      name\n      key\n      status\n    }\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query Authentication {\n  me {\n    id\n    username\n    email\n    status\n    accessToken\n    profile {\n      firstName\n      lastName\n      picture\n    }\n    role {\n      id\n      name\n      key\n      status\n    }\n  }\n}\n\nmutation CreateAuthentication($email: String, $password: String) {\n  createAuthentication(email: $email, password: $password) {\n    accessToken\n  }\n}"): (typeof documents)["query Authentication {\n  me {\n    id\n    username\n    email\n    status\n    accessToken\n    profile {\n      firstName\n      lastName\n      picture\n    }\n    role {\n      id\n      name\n      key\n      status\n    }\n  }\n}\n\nmutation CreateAuthentication($email: String, $password: String) {\n  createAuthentication(email: $email, password: $password) {\n    accessToken\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,18 +1,17 @@
+import http from "@/lib/http"
 import {
-	GetUsersDocument,
-	CreateUserDocument,
-	CreateUserMutationVariables,
-} from "@ven/graphql/dist/gql/graphql"
-import request from "graphql-request"
+	AccountsDocument,
+	MutationCreateAccountArgs,
+	CreateAccountDocument,
+} from "@ven/graphql/dist/graphql"
 import { useMutation, useQuery } from "react-query"
 
 // load users
-export const loadUsers = async () => request("/api", GetUsersDocument)
-export const useGetUsersQuery = () => useQuery("get-users", loadUsers)
+export const useGetUsersQuery = () =>
+	useQuery("get-users", () => http.request(AccountsDocument))
 
 // create user
-export const createUser = async (
-	variables: CreateUserMutationVariables["variables"]
-) => request("/api", CreateUserDocument, { variables })
 export const useCreateUserMutation = () =>
-	useMutation("create-user", createUser)
+	useMutation("create-user", (variables: MutationCreateAccountArgs) =>
+		http.request(CreateAccountDocument, variables)
+	)

@@ -5,6 +5,7 @@ import {
 	deleteAccountMutation,
 	accountSessionQuery,
 	updateAccountMutation,
+	accountByEmailQuery,
 } from "./resolvers/accounts"
 import {
 	createAuthenticationMutation,
@@ -17,6 +18,7 @@ export default {
 		// Accounts
 		accounts: accountsQuery,
 		account: accountQuery,
+		accountByEmail: accountByEmailQuery,
 		me: accountSessionQuery,
 	},
 	Mutation: {

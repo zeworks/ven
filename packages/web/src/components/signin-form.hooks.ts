@@ -1,3 +1,4 @@
+import { SESSION_TOKEN_KEY } from "@/config/constants"
 import { useSessionProvider } from "@/providers/session"
 import { useState } from "react"
 
@@ -15,6 +16,11 @@ export const useSignInForm = () => {
 		setLoading(true)
 		return new Promise((resolve) => {
 			setTimeout(() => {
+				// TODO: remove this logic from here
+				localStorage.setItem(
+					SESSION_TOKEN_KEY,
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhNmYzMzI4LTlhODktNDVlNi04MGQ3LWM0NjQ5NWEzM2JmMSIsImlhdCI6MTY5OTk4MTgwNiwiZXhwIjoxNzAwMDY4MjA2fQ.myj9VTZaBpWwZ0c-zUyon9DYf2tLDDmbtaQ8Ht_lB_k"
+				)
 				setSession({
 					accessToken: "123",
 					createdAt: new Date(),

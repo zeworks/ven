@@ -1,4 +1,5 @@
 import { InternalServerError } from "../errors/internal-server-error"
+import { NotFoundError } from "../errors/not-found-error"
 import { UnauthorizedError } from "../errors/unauthorized-error"
 import { HttpResponse, HttpStatusCode } from "../protocols/http"
 
@@ -30,4 +31,9 @@ export const serverError = (error: Error): HttpResponse => ({
 export const unauthorized = (): HttpResponse => ({
 	statusCode: HttpStatusCode.UNAUTHORIZED,
 	data: new UnauthorizedError(),
+})
+
+export const notFound = (message: string): HttpResponse => ({
+	statusCode: HttpStatusCode.NOT_FOUND,
+	data: new NotFoundError(message),
 })

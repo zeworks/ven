@@ -7,7 +7,7 @@ import { DbLoadAccountByEmail } from "@/data/usecases/users/load-account-by-emai
 import { DbLoadAccountByUsername } from "@/data/usecases/users/load-account-by-username"
 import { BcryptAdapter } from "@/infra/cryptography/bcrypt-adapter"
 import { UuidAdapter } from "@/infra/cryptography/uuid"
-import { makeCreateAccountValidation } from "@/main/factories/controllers/users/create-account-validation-factory"
+import { makeCreateAccountValidation } from "@/main/factories/controllers/account/create-account-validation-factory"
 import { CreateAccountController } from "./create-account-controller"
 
 test("Should create account with success", async () => {
