@@ -1,9 +1,9 @@
-import { User } from "@ven/contracts/dist/user"
-import { createContext, useContext, useState } from "react"
+import { SESSION_TOKEN_KEY } from "@/config/constants"
+import { useAuthenticationQuery } from "@/services/authentication"
+import { Account } from "@ven/graphql/dist/graphql"
+import { createContext, useContext, useEffect, useState } from "react"
 
-type Session = User & {
-	accessToken: string
-}
+type Session = Account
 
 export interface SessionContextObject {
 	/**
@@ -28,36 +28,63 @@ export interface SessionContextObject {
 	/**
 	 * @description Check if the user is authenticated.
 	 */
-	isAuthenticated: () => boolean
+	isAuthenticated: boolean
+
+	hasAuthenticationToken: boolean
+
+	setStorageSessionToken: (token: string) => void
 }
 
 const initialState: SessionContextObject = {
 	session: undefined,
 	setSession: () => null,
 	clearSession: () => null,
-	isAuthenticated: () => false,
+	setStorageSessionToken: () => null,
+	isAuthenticated: false,
+	hasAuthenticationToken: false,
 }
 
 export const SessionContext = createContext<SessionContextObject>(initialState)
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
+	const authenticationQuery = useAuthenticationQuery()
+
 	const [session, setSession] = useState<Session | undefined>(
 		initialState.session
 	)
 
-	const isAuthenticated = () => !!session
+	const hasAuthenticationToken =
+		!!localStorage.getItem(SESSION_TOKEN_KEY) || false
+
+	const isAuthenticated = !!session?.id
+
+	useEffect(() => {
+		if (authenticationQuery.data?.me && hasAuthenticationToken)
+			setSession(authenticationQuery.data.me as any)
+	}, [authenticationQuery.data?.me, hasAuthenticationToken])
 
 	const clearSession = () => {
+		localStorage.removeItem(SESSION_TOKEN_KEY)
 		setSession(undefined)
+	}
+
+	const setStorageSessionToken = (token: string) =>
+		localStorage.setItem(SESSION_TOKEN_KEY, token)
+
+	const updateStorageSession = (session: Session) => {
+		localStorage.setItem(SESSION_TOKEN_KEY, session.accessToken!)
+		setSession(session)
 	}
 
 	return (
 		<SessionContext.Provider
 			value={{
 				session,
-				setSession,
+				setSession: updateStorageSession,
 				clearSession,
 				isAuthenticated,
+				hasAuthenticationToken,
+				setStorageSessionToken,
 			}}
 		>
 			{children}

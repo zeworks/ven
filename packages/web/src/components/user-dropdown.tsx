@@ -9,11 +9,17 @@ import {
 } from "./ui/dropdown-menu"
 import { Button } from "./ui/button"
 import { Avatar, AvatarImage } from "./ui/avatar"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useSessionProvider } from "@/providers/session"
 
 export default function UserDropdown() {
 	const { session, clearSession } = useSessionProvider()
+	const navigate = useNavigate()
+
+	const onClearSession = () => {
+		clearSession()
+		navigate("/auth/sign-in")
+	}
 
 	return (
 		<DropdownMenu>
@@ -22,16 +28,28 @@ export default function UserDropdown() {
 					variant="ghost"
 					className="relative h-8 w-8 select-none rounded-full bg-primary/10"
 				>
-					<Avatar className="h-8 w-8">
-						<AvatarImage src={session?.profile.picture} alt="user profile" />
-					</Avatar>
+					{session?.profile?.picture ? (
+						<Avatar className="h-8 w-8">
+							<AvatarImage
+								src={session?.profile?.picture || ""}
+								alt="user profile"
+							/>
+						</Avatar>
+					) : (
+						<div className="flex items-center justify-center w-100">
+							{[
+								session?.profile?.firstName[0],
+								session?.profile?.lastName?.[0],
+							].join(" ")}
+						</div>
+					)}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56" align="end" forceMount>
 				<DropdownMenuLabel className="font-normal">
 					<div className="flex flex-col space-y-2">
 						<p className="text-sm font-medium leading-none">
-							{[session?.profile.first_name, session?.profile.last_name].join(
+							{[session?.profile?.firstName, session?.profile?.lastName].join(
 								" "
 							)}
 						</p>
@@ -58,7 +76,7 @@ export default function UserDropdown() {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem asChild>
-						<div onClick={clearSession}>Sign Out</div>
+						<div onClick={onClearSession}>Sign Out</div>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>

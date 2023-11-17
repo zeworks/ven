@@ -1,0 +1,13 @@
+query Authentication {
+	me {
+		...AccountFragment
+		accessToken
+	}
+}
+
+mutation CreateAuthentication($email: String, $password: String) {
+	createAuthentication(email: $email, password: $password) {
+		...AccountFragment
+		accessToken
+	}
+}

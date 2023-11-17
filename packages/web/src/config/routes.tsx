@@ -1,7 +1,6 @@
 import { RouteObject } from "react-router-dom"
 import Dashboard from "@/screens/app/dashboard"
-import SignIn from "@/screens/auth/signin"
-import SignUp from "@/screens/auth/signup"
+import SignIn from "@/screens/auth/sign-in"
 import AuthLayout from "@/layouts/auth"
 import AppLayout from "@/layouts/app"
 import ErrorNotFound from "@/screens/error-404"
@@ -19,10 +18,6 @@ export const routes: Route[] = [
 			{
 				path: "sign-in",
 				element: <SignIn />,
-			},
-			{
-				path: "sign-up",
-				element: <SignUp />,
 			},
 		],
 	},

@@ -1,0 +1,18 @@
+query Accounts {
+	accounts {
+		total
+		data {
+			...AccountFragment
+		}
+	}
+}
+
+query AccountByEmail($email: String!) {
+	accountByEmail(email: $email)
+}
+
+mutation CreateAccount($input: CreateAccount) {
+	createAccount(input: $input) {
+		...AccountFragment
+	}
+}

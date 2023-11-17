@@ -1,0 +1,4 @@
+extend type Mutation {
+	createAuthentication(email: String, password: String): Account
+	deleteAuthentication: Boolean @auth
+}

@@ -1,0 +1,17 @@
+fragment AccountFragment on Account {
+	id
+	username
+	email
+	status
+	profile {
+		firstName
+		lastName
+		picture
+	}
+	role {
+		id
+		name
+		key
+		status
+	}
+}

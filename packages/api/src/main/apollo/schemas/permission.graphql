@@ -1,0 +1,8 @@
+type Permission {
+	id: String!
+	name: String!
+	key: String!
+	status: Boolean!
+	parent: String
+	createdAt: DateTime!
+}

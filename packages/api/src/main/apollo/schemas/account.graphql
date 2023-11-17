@@ -1,0 +1,61 @@
+type AccountProfile {
+	firstName: String!
+	lastName: String
+	picture: String
+}
+
+type Account {
+	id: String!
+	username: String!
+	email: String!
+	status: Boolean
+	profile: AccountProfile
+	role: Role
+	accessToken: String
+}
+
+input CreateAccountProfileInput {
+	firstName: String!
+	lastName: String
+	picture: String
+}
+
+input UpdateAccountProfileInput {
+	firstName: String
+	lastName: String
+	picture: String
+}
+
+input CreateAccount {
+	username: String!
+	email: String!
+	status: Boolean
+	password: String
+	profile: CreateAccountProfileInput!
+	role: String
+}
+
+input UpdateAccountInput {
+	username: String
+	password: String
+	profile: UpdateAccountProfileInput
+	role: String
+}
+
+type AccountsDatatable {
+	total: Int
+	data: [Account]
+}
+
+extend type Mutation {
+	createAccount(input: CreateAccount): Account @auth
+	deleteAccount(id: String!): Boolean @auth
+	updateAccount(id: String!, input: UpdateAccountInput!): Account @auth
+}
+
+extend type Query {
+	accounts: AccountsDatatable @auth
+	account(id: String!): Account @auth
+	accountByEmail(email: String!): Boolean
+	me: Account @auth
+}
