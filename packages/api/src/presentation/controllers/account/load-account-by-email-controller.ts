@@ -10,29 +10,35 @@ import {
 	Controller,
 	ControllerProtocol,
 } from "@/presentation/protocols/controller"
+import { HttpResponse } from "@/presentation/protocols/http"
 
-export class LoadAccountByEmailController implements Controller {
+export class LoadAccountByEmailController
+	implements Controller<ControllerRequest, ControllerResponse>
+{
 	constructor(
 		private readonly loadAccountByEmailService: LoadAccountByEmailUseCase
 	) {}
 
-	execute: ControllerProtocol<
-		{ email: string },
-		LoadAccountByEmailUseCase.Result,
-		any
-	> = async (request) => {
-		if (!request?.email) return badRequest(new MissingParamError("email"))
+	execute: ControllerProtocol<ControllerRequest, ControllerResponse, any> =
+		async (request) => {
+			if (!request?.email) return badRequest(new MissingParamError("email"))
 
-		try {
-			const account = await this.loadAccountByEmailService.loadByEmail(
-				request?.email
-			)
+			try {
+				const account = await this.loadAccountByEmailService.loadByEmail(
+					request?.email
+				)
 
-			if (!account) return notFound("account not found")
+				if (!account) return notFound("account not found")
 
-			return ok(account)
-		} catch (error: any) {
-			return serverError(error)
+				return ok(true)
+			} catch (error: any) {
+				return serverError(error)
+			}
 		}
-	}
 }
+
+type ControllerRequest = {
+	email: string
+}
+
+type ControllerResponse = boolean

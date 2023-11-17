@@ -1,33 +1,29 @@
-type UserProfile {
+type AccountProfile {
 	firstName: String!
 	lastName: String
 	picture: String
 }
 
-type User {
+type Account {
 	id: String!
 	username: String!
 	email: String!
 	status: Boolean
-	profile: UserProfile
+	profile: AccountProfile
 	role: Role
 	accessToken: String
 }
 
-input CreateUserProfileInput {
+input CreateAccountProfileInput {
 	firstName: String!
 	lastName: String
 	picture: String
 }
 
-input UpdateUserProfileInput {
+input UpdateAccountProfileInput {
 	firstName: String
 	lastName: String
 	picture: String
-}
-
-input ClientID {
-	id: String!
 }
 
 input CreateAccount {
@@ -35,31 +31,31 @@ input CreateAccount {
 	email: String!
 	status: Boolean
 	password: String
-	profile: CreateUserProfileInput!
+	profile: CreateAccountProfileInput!
 	role: String
 }
 
 input UpdateAccountInput {
 	username: String
 	password: String
-	profile: UpdateUserProfileInput
+	profile: UpdateAccountProfileInput
 	role: String
 }
 
-type UsersDatatable {
+type AccountsDatatable {
 	total: Int
-	data: [User]
+	data: [Account]
 }
 
 extend type Mutation {
-	createAccount(input: CreateAccount): User @auth
+	createAccount(input: CreateAccount): Account @auth
 	deleteAccount(id: String!): Boolean @auth
-	updateAccount(id: String!, input: UpdateAccountInput!): User @auth
+	updateAccount(id: String!, input: UpdateAccountInput!): Account @auth
 }
 
 extend type Query {
-	accounts: UsersDatatable @auth
-	account(id: String!): User @auth
-	accountByEmail(email: String!): User @auth
-	me: User @auth
+	accounts: AccountsDatatable @auth
+	account(id: String!): Account @auth
+	accountByEmail(email: String!): Boolean
+	me: Account @auth
 }

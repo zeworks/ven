@@ -6,18 +6,22 @@ import { Icons } from "./icons"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useState } from "react"
 import { useSignInForm, type SignInFormData } from "./signin-form.hooks"
+import { useNavigate } from "react-router-dom"
 
 export function SignInForm() {
-	const { signin, validateEmail, loading } = useSignInForm()
+	const { signin, isEmailValid, loading, error } = useSignInForm()
 	const { register, handleSubmit } = useForm<SignInFormData>({
 		mode: "onChange",
 	})
 
+	const navigate = useNavigate()
+
 	const [showPassword, setShowPassword] = useState(false)
 
-	const onSignIn: SubmitHandler<SignInFormData> = (data, event) => {
+	const onSignIn: SubmitHandler<SignInFormData> = async (data, event) => {
 		event?.preventDefault()
-		signin(data)
+		await signin(data)
+		navigate("/")
 	}
 
 	const onValidateEmail: SubmitHandler<{ email: string }> = async (
@@ -25,8 +29,9 @@ export function SignInForm() {
 		event
 	) => {
 		event?.preventDefault()
-		await validateEmail(data.email)
-		setShowPassword(true)
+		const isValid = await isEmailValid(data.email)
+
+		if (isValid) setShowPassword(true)
 	}
 
 	return (
@@ -74,6 +79,7 @@ export function SignInForm() {
 						{loading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
 						Sign In
 					</Button>
+					{error && <p>{error}</p>}
 				</div>
 			</form>
 		</div>

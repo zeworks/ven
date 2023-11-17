@@ -53,5 +53,5 @@ test("load account by email with success", async () => {
 		email: account.data?.email!,
 	})
 
-	expect(result.data?.email).toEqual(account.data?.email)
+	expect(result.data).toEqual(true)
 })

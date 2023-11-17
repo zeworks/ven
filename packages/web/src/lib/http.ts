@@ -3,6 +3,7 @@ import { GraphQLClient } from "graphql-request"
 
 const http = new GraphQLClient("/api")
 
-http.setHeader(`authorization`, `${localStorage.getItem(SESSION_TOKEN_KEY)}`)
+const token = localStorage.getItem(SESSION_TOKEN_KEY)
+if (token) http.setHeader(`authorization`, token)
 
 export default http

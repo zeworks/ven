@@ -78,11 +78,29 @@ export class UsersRepository
 		return null
 	}
 	loadByEmail: LoadAccountByEmailUseCaseFunction = async (email) => {
-		return PrismaHelper.getCollection("users").findUnique({
+		const result = await PrismaHelper.getCollection("users").findUnique({
 			where: {
 				email,
 			},
+			include: {
+				role: {
+					include: {
+						permissions: true,
+					},
+				},
+			},
 		})
+
+		if (!result) return null
+
+		return {
+			...result,
+			profile: {
+				firstName: result.firstName,
+				lastName: result.lastName,
+				picture: result.picture,
+			},
+		}
 	}
 
 	loadById: LoadAccountByIdUseCaseFunction = async (id) => {

@@ -31,7 +31,14 @@ export class DbCreateAuthentication implements CreateAuthenticationUseCase {
 			if (!isValid) return null
 
 			const accessToken = await this.encrypter.encrypt(account.id)
-			return this.updateAccessToken.updateToken(account.id, accessToken)
+
+			// update the token in repository
+			await this.updateAccessToken.updateToken(account.id, accessToken)
+
+			return {
+				...account,
+				accessToken,
+			}
 		}
 
 		return null

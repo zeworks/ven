@@ -1,3 +1,5 @@
+import { User } from "@/domain/entities/user"
+
 export type LoadAccountByEmailUseCaseFunction = (
 	email: string
 ) => Promise<LoadAccountByEmailUseCase.Result>
@@ -7,10 +9,5 @@ export interface LoadAccountByEmailUseCase {
 }
 
 export namespace LoadAccountByEmailUseCase {
-	export type Result = {
-		id: string
-		email: string
-		password?: string | null
-		status?: boolean | null
-	} | null
+	export type Result = User | null
 }

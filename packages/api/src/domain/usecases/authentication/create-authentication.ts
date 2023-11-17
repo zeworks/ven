@@ -1,3 +1,5 @@
+import { User } from "@/domain/entities/user"
+
 export type CreateAuthenticationUseCaseFunction = (
 	input: CreateAuthenticationUseCase.Params
 ) => Promise<CreateAuthenticationUseCase.Result>
@@ -12,7 +14,5 @@ export namespace CreateAuthenticationUseCase {
 		password: string
 	}
 
-	export type Result = {
-		accessToken: string
-	} | null
+	export type Result = User | null
 }

@@ -1,8 +1,4 @@
-type Authentication {
-	accessToken: String!
-}
-
 extend type Mutation {
-	createAuthentication(email: String, password: String): Authentication
+	createAuthentication(email: String, password: String): Account
 	deleteAuthentication: Boolean @auth
 }

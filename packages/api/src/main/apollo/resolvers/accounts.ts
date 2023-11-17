@@ -62,5 +62,5 @@ export const accountByEmailQuery = (_: any, args: any, context: any) =>
 		makeLoadAccountByEmailController(),
 		args,
 		context,
-		true
+		false
 	)
