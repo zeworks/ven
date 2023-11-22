@@ -21,7 +21,6 @@ export function Header() {
 					className="relative z-20 flex items-center text-lg font-medium"
 				>
 					<Icons.logo className="mr-2 h-7 w-7" />
-					ven software
 				</Link>
 
 				<Separator orientation="vertical" className="h-5" />

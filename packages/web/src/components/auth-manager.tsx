@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 export const AuthManager = ({ children }: { children: ReactNode }) => {
-	const { hasAuthenticationToken } = useSessionProvider()
+	const { hasAuthenticationToken, clearSession } = useSessionProvider()
 	const currentAuthentication = useAuthenticationQuery()
 	const navigate = useNavigate()
 	const location = useLocation()
@@ -13,7 +13,10 @@ export const AuthManager = ({ children }: { children: ReactNode }) => {
 		currentAuthentication.isFetched && !currentAuthentication.data?.me
 
 	useEffect(() => {
-		if (isNotAuthenticated || !hasAuthenticationToken) navigate("/auth/sign-in")
+		if (isNotAuthenticated || !hasAuthenticationToken) {
+			clearSession()
+			navigate("/auth/sign-in")
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isNotAuthenticated, hasAuthenticationToken])
 
