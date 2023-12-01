@@ -18,7 +18,7 @@ export const AuthManager = ({ children }: { children: ReactNode }) => {
 			navigate("/auth/sign-in")
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isNotAuthenticated, hasAuthenticationToken])
+	}, [])
 
 	useEffect(() => {
 		const isAuthScreen = /auth/.test(location.pathname)

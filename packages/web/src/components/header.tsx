@@ -5,6 +5,8 @@ import { CiLight, CiDark } from "react-icons/ci"
 import { useThemeProvider } from "@/providers/theme"
 import { Button } from "./ui/button"
 import { Icons } from "./icons"
+import { NavLink } from "./nav-link"
+import { ProjectSwitcher } from "./project-switcher"
 
 export function Header() {
 	const { setTheme, theme } = useThemeProvider()
@@ -20,10 +22,20 @@ export function Header() {
 					to="/"
 					className="relative z-20 flex items-center text-lg font-medium"
 				>
-					<Icons.logo className="mr-2 h-7 w-7" />
+					<Icons.logo className="mr-1 h-7 w-7" />
 				</Link>
+				<Separator orientation="vertical" className="h-5" />
+
+				<ProjectSwitcher />
 
 				<Separator orientation="vertical" className="h-5" />
+
+				<nav className="flex items-center space-x-6">
+					<NavLink to="/">Home</NavLink>
+					<NavLink to="/events">Events</NavLink>
+					<NavLink to="/monitoring">Monitoring</NavLink>
+					<NavLink to="/settings">Settings</NavLink>
+				</nav>
 			</div>
 
 			<div className="flex items-center gap-4">
