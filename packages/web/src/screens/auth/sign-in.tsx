@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons"
-import { SignInForm } from "@/components/signin-form"
+import { SignInForm } from "@/screens/auth/sign-in.components"
 import { Link } from "react-router-dom"
 
 export default function SignIn() {

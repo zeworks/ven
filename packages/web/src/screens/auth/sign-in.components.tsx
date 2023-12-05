@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils"
-import { Label } from "./ui/label"
-import { Input } from "./ui/input"
-import { Button } from "./ui/button"
-import { Icons } from "./icons"
+import { Label } from "../../components/ui/label"
+import { Input } from "../../components/ui/input"
+import { Button } from "../../components/ui/button"
+import { Icons } from "../../components/icons"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useSignInForm, type SignInFormData } from "./signin-form.hooks"
+import { useSignInForm, type SignInFormData } from "./sign-in.hooks"
 import { useNavigate } from "react-router-dom"
 
 export function SignInForm() {

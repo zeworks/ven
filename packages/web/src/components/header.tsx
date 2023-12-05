@@ -31,10 +31,10 @@ export function Header() {
 				<Separator orientation="vertical" className="h-5" />
 
 				<nav className="flex items-center space-x-6">
-					<NavLink to="/">Home</NavLink>
+					{/* <NavLink to="/">Home</NavLink>
 					<NavLink to="/events">Events</NavLink>
 					<NavLink to="/monitoring">Monitoring</NavLink>
-					<NavLink to="/settings">Settings</NavLink>
+					<NavLink to="/settings">Settings</NavLink> */}
 				</nav>
 			</div>
 

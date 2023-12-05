@@ -1,6 +1,6 @@
 import { useSessionProvider } from "@/providers/session"
-import { useProject, useProjects } from "@/services/project"
-import { PlusCircledIcon } from "@radix-ui/react-icons"
+import { useProjectQuery } from "@/services/project"
+import { CaretSortIcon, PlusCircledIcon } from "@radix-ui/react-icons"
 import { ComponentPropsWithoutRef, useState } from "react"
 import { twMerge } from "tailwind-merge"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
@@ -14,96 +14,86 @@ import {
 	CommandList,
 	CommandSeparator,
 } from "./ui/command"
-import { Dialog, DialogTrigger } from "./ui/dialog"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Skeleton } from "./ui/skeleton"
+import { NewProjectDialog } from "./new-project-dialog"
 
 type PopoverTriggerProps = ComponentPropsWithoutRef<typeof PopoverTrigger>
 type ProjectSwitcherProps = PopoverTriggerProps
 
 export function ProjectSwitcher({ className }: ProjectSwitcherProps) {
 	const [open, setOpen] = useState(false)
+	const [openNewProject, setOpenNewProject] = useState(false)
 
 	const session = useSessionProvider()
 	const { project: currentProject, isLoaded: isCurrentProjectLoaded } =
-		useProject()
-	const projects = useProjects()
+		useProjectQuery()
 
-	const isLoading = !session
+	const renderButtonContent = () => {
+		const isLoading = !session
+		const avatarFallback =
+			session?.session?.profile?.firstName?.charAt(0) ||
+			currentProject?.name?.charAt(0) ||
+			""
 
-	const user = session?.session
+		if (isLoading) {
+			return (
+				<>
+					<Skeleton className="h-5 w-5 rounded-full bg-primary/30" />
+					<Skeleton className="h-3 w-32 bg-primary/30" />
+				</>
+			)
+		}
+
+		if (!currentProject) {
+			return (
+				<>
+					<Avatar className="h-5 w-5">
+						<AvatarFallback></AvatarFallback>
+					</Avatar>
+					<span className="text-xs text-muted-foreground">No Project</span>
+					<CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+				</>
+			)
+		}
+
+		return (
+			<>
+				<Avatar className="h-5 w-5">
+					<AvatarImage src={currentProject?.imageUrl} />
+				</Avatar>
+				<span className="text-xs text-muted-foreground">
+					{currentProject?.name}
+				</span>
+			</>
+		)
+	}
 
 	return (
-		<Dialog open>
+		<>
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger disabled asChild>
 					<Button
 						variant="outline"
 						role="combobox"
 						aria-expanded={open}
-						aria-label="Select a team"
+						aria-label="Select project"
 						className={twMerge("w-[200px] items-center gap-2", className)}
 						disabled={!isCurrentProjectLoaded}
 					>
-						{isLoading ? (
-							<>
-								<Skeleton className="h-5 w-5 rounded-full bg-primary/30" />
-								<Skeleton className="h-3 w-32 bg-primary/30" />
-							</>
-						) : !currentProject ? (
-							<>
-								<Avatar className="h-5 w-5">
-									{user?.profile?.picture ? (
-										<AvatarImage src={user?.profile?.picture} />
-									) : (
-										<AvatarFallback>
-											{[user?.profile?.firstName, user?.profile?.lastName]}
-										</AvatarFallback>
-									)}
-								</Avatar>
-								<span className="text-xs text-muted-foreground">
-									{user?.profile?.firstName ?? "Personal"}
-								</span>
-							</>
-						) : (
-							<>
-								<Avatar className="h-5 w-5">
-									<AvatarImage src={currentProject?.imageUrl} />
-								</Avatar>
-								<span className="text-xs text-muted-foreground">
-									{currentProject?.name}
-								</span>
-							</>
-						)}
+						{renderButtonContent()}
 						{/* {isSettingOrganization ? (
 							<Loader2 className="ml-auto h-4 w-4 shrink-0 animate-spin opacity-30" />
 						) : (
-							<CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
 						)} */}
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className="w-[200px] p-0">
 					<Command>
 						<CommandList>
-							<CommandInput placeholder="Search team..." />
-							<CommandEmpty>No team found.</CommandEmpty>
-							<CommandGroup heading="Personal">
-								{/* <CommandItem
-									onSelect={() => setCurrentOrganization(null)}
-									className="gap-2"
-								>
-									<Avatar className="h-5 w-5">
-										<AvatarImage src={user?.imageUrl} />
-									</Avatar>
-									<span className="text-xs text-muted-foreground">
-										{user?.fullName}
-									</span>
-									{currentOrganization === null && (
-										<CheckIcon className="ml-auto h-4 w-4" />
-									)}
-								</CommandItem> */}
-							</CommandGroup>
-							<CommandGroup heading="Teams">
+							<CommandInput placeholder="Search project..." />
+							<CommandEmpty>No project found.</CommandEmpty>
+							<CommandGroup heading="Projects">
 								{/* {organizationList?.map(({ organization }) => {
 									return (
 										<CommandItem
@@ -129,22 +119,25 @@ export function ProjectSwitcher({ className }: ProjectSwitcherProps) {
 						<CommandSeparator />
 						<CommandList>
 							<CommandGroup>
-								<DialogTrigger asChild>
-									<CommandItem
-										className="gap-2 py-2 text-xs"
-										onSelect={() => {
-											setOpen(false)
-										}}
-									>
-										<PlusCircledIcon className="h-4 w-4" />
-										Create Team
-									</CommandItem>
-								</DialogTrigger>
+								<CommandItem
+									className="gap-2 py-2 text-xs cursor-pointer"
+									onSelect={() => {
+										setOpen(false)
+										setOpenNewProject(true)
+									}}
+								>
+									<PlusCircledIcon className="h-4 w-4" />
+									Create Project
+								</CommandItem>
 							</CommandGroup>
 						</CommandList>
 					</Command>
 				</PopoverContent>
 			</Popover>
-		</Dialog>
+			<NewProjectDialog
+				open={openNewProject}
+				onOpenChange={setOpenNewProject}
+			/>
+		</>
 	)
 }
