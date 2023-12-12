@@ -18,7 +18,7 @@ test("Should delete access token with success", async () => {
 			},
 			username: "user_username",
 			password,
-			status: true,
+			status: "ACTIVE",
 			accessToken: "TOKEN_DUMMY",
 		},
 	]
@@ -49,7 +49,7 @@ test("Should not delete access token with success if invalid account id", async 
 			},
 			username: "user_username",
 			password,
-			status: true,
+			status: "ACTIVE",
 			accessToken: "TOKEN_DUMMY",
 		},
 	]
