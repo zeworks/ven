@@ -1,4 +1,4 @@
-import { User, Profile } from "@/domain/entities/user"
+import { User } from "@/domain/entities/user"
 import { z } from "zod"
 import { CreateAccountUseCaseInput } from "./create-account"
 
