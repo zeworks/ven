@@ -5,6 +5,7 @@ import { UpdateTokenRepository } from "@/data/protocols/repositories/users/updat
 import {
 	CreateAuthenticationUseCase,
 	CreateAuthenticationUseCaseFunction,
+	CreateAuthenticationUseCaseInput,
 } from "@/domain/usecases/authentication/create-authentication"
 
 export class DbCreateAuthentication implements CreateAuthenticationUseCase {
@@ -15,7 +16,9 @@ export class DbCreateAuthentication implements CreateAuthenticationUseCase {
 		private readonly updateAccessToken: UpdateTokenRepository
 	) {}
 
-	authenticate: CreateAuthenticationUseCaseFunction = async (input) => {
+	authenticate: CreateAuthenticationUseCaseFunction = async (data) => {
+		const input = CreateAuthenticationUseCaseInput.parse(data)
+
 		const account = await this.loadAccountByEmailRepository.loadByEmail(
 			input.email
 		)
