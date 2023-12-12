@@ -63,7 +63,7 @@ test("Should update first name and password", async () => {
 			id: account.data.id,
 			input: {
 				...account.data,
-				role: account.data.role?.id,
+				roleId: account.data.role?.id,
 				profile: {
 					firstName: "José",
 				},
@@ -125,7 +125,7 @@ test("Should update the username", async () => {
 			id: account.data.id,
 			input: {
 				...account.data,
-				role: account.data.role?.id,
+				roleId: account.data.role?.id,
 				username: "teste",
 			},
 		})
@@ -165,6 +165,8 @@ test("Should throw an error if username is already in use", async () => {
 
 	const updateAccountController = new UpdateAccountController(dbUpdateAccount)
 
+	const username = faker.name.middleName()
+
 	const oldAccount = await createAccountController.execute({
 		input: {
 			email: "newuser1@test.com",
@@ -172,7 +174,7 @@ test("Should throw an error if username is already in use", async () => {
 			profile: {
 				firstName: faker.name.firstName(),
 			},
-			username: faker.name.middleName(),
+			username,
 		},
 	})
 
@@ -183,7 +185,7 @@ test("Should throw an error if username is already in use", async () => {
 			profile: {
 				firstName: faker.name.firstName(),
 			},
-			username: faker.name.middleName(),
+			username,
 		},
 	})
 
@@ -194,7 +196,7 @@ test("Should throw an error if username is already in use", async () => {
 			id: account.data.id,
 			input: {
 				...account.data,
-				role: account.data.role?.id,
+				roleId: account.data.role?.id,
 				username: oldAccount.data?.username,
 			},
 		})

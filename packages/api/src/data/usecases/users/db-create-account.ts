@@ -8,6 +8,7 @@ import { LoadAccountByUsernameRepository } from "@/data/protocols/repositories/u
 import {
 	CreateAccountUseCase,
 	CreateAccountUseCaseFunction,
+	CreateAccountUseCaseInput,
 } from "@/domain/usecases/users/create-account"
 
 export class DbCreateAccount implements CreateAccountUseCase {
@@ -19,7 +20,9 @@ export class DbCreateAccount implements CreateAccountUseCase {
 		private readonly createAccount: CreateAccountRepository
 	) {}
 
-	create: CreateAccountUseCaseFunction = async (data) => {
+	create: CreateAccountUseCaseFunction = async (input) => {
+		const data = CreateAccountUseCaseInput.parse(input)
+
 		try {
 			const emailExists = await this.loadAccountByEmail.loadByEmail(data.email)
 
@@ -40,7 +43,6 @@ export class DbCreateAccount implements CreateAccountUseCase {
 				...data,
 				id,
 				password,
-				status: data.status ?? false,
 			})
 
 			return result

@@ -2,7 +2,11 @@ import { LoadAccountByEmailUseCaseFunction } from "@/domain/usecases/users/load-
 import { LoadAccountByIdUseCaseFunction } from "@/domain/usecases/users/load-account-by-id"
 import { LoadAccountByTokenUseCaseFunction } from "@/domain/usecases/users/load-account-by-token"
 import { LoadAccountByUsernameUseCaseFunction } from "@/domain/usecases/users/load-account-by-username"
-import { CreateAccountRepository } from "./create-account-repository"
+import {
+	CreateAccountRepository,
+	CreateAccountRepositoryInput,
+	CreateAccountRepositoryOutput,
+} from "./create-account-repository"
 import { LoadAccountByEmailRepository } from "./load-account-by-email-repository"
 import { LoadAccountByIdRepository } from "./load-account-by-id-repository"
 import { LoadAccountByTokenRepository } from "./load-account-by-token-repository"
@@ -16,7 +20,10 @@ import { LoadAccountsUseCaseFunction } from "@/domain/usecases/users/load-accoun
 import { DeleteAccountRepository } from "./delete-account-repository"
 import { DeleteAccountUseCaseFn } from "@/domain/usecases/users/delete-account"
 import { UpdateAccountRepository } from "./update-account-repository"
-import { UpdateAccountUseCase } from "@/domain/usecases/users/update-account"
+import {
+	UpdateAccountUseCaseInput,
+	UpdateAccountUseCaseOutput,
+} from "@/domain/usecases/users/update-account"
 import { User } from "@/domain/entities/user"
 import { faker } from "@faker-js/faker"
 
@@ -45,23 +52,24 @@ export class InMemoryUsersRepository
 	}
 
 	create = async (
-		input: CreateAccountRepository.Params
-	): Promise<CreateAccountRepository.Result> => {
-		const data: CreateAccountRepository.Result = {
+		input: CreateAccountRepositoryInput
+	): Promise<CreateAccountRepositoryOutput> => {
+		const data: CreateAccountRepositoryOutput = {
 			...input,
 			profile: {
 				firstName: input?.profile?.firstName,
 				lastName: input?.profile?.lastName,
 				picture: input?.profile?.picture,
 			},
-			role: input?.role
+			status: input.status ?? "PENDING",
+			role: input?.roleId
 				? {
-						id: input?.role,
-						key: `role_key_${input?.role}`,
-						name: `Role name ${input?.role}`,
+						id: input?.roleId,
+						key: `role_key_${input?.roleId}`,
+						name: `Role name ${input?.roleId}`,
 						status: true,
 				  }
-				: null,
+				: undefined,
 		}
 
 		this.users.push(data)
@@ -121,11 +129,11 @@ export class InMemoryUsersRepository
 
 	async updateAccount(
 		id: string,
-		input: UpdateAccountUseCase.Input
-	): Promise<UpdateAccountUseCase.Result> {
+		input: UpdateAccountUseCaseInput
+	): Promise<UpdateAccountUseCaseOutput> {
 		const user = this.users.find((u) => u.id === id)
 		if (user) {
-			return Object.assign<any, User>(user, {
+			return Object.assign(user, {
 				...user,
 				...input,
 				username: input.username ?? user.username,
@@ -133,9 +141,9 @@ export class InMemoryUsersRepository
 					...user.profile,
 					...input.profile,
 				},
-				role: input.role
+				role: input.roleId
 					? {
-							id: input.role,
+							id: input.roleId,
 							key: faker.word.adjective(5),
 							name: faker.word.verb(5),
 					  }

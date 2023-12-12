@@ -1,20 +1,23 @@
 import { User, Profile } from "@/domain/entities/user"
+import { z } from "zod"
+import { CreateAccountUseCaseInput } from "./create-account"
+
+export const UpdateAccountUseCaseInput = CreateAccountUseCaseInput.partial()
+
+export const UpdateAccountUseCaseOutput = User.nullable()
+
+export type UpdateAccountUseCaseInput = z.infer<
+	typeof UpdateAccountUseCaseInput
+>
+export type UpdateAccountUseCaseOutput = z.infer<
+	typeof UpdateAccountUseCaseOutput
+>
+
+export type UpdateAccountUseCaseFn = (
+	id: string,
+	input: UpdateAccountUseCaseInput
+) => Promise<UpdateAccountUseCaseOutput>
 
 export interface UpdateAccountUseCase {
 	update: UpdateAccountUseCaseFn
 }
-
-export namespace UpdateAccountUseCase {
-	export type Input = {
-		username?: string | null
-		password?: string | null
-		role?: string | null
-		profile?: Partial<Profile>
-	}
-	export type Result = User | null
-}
-
-export type UpdateAccountUseCaseFn = (
-	id: string,
-	input: UpdateAccountUseCase.Input
-) => Promise<UpdateAccountUseCase.Result>

@@ -20,7 +20,7 @@ export class DbCreateAuthentication implements CreateAuthenticationUseCase {
 			input.email
 		)
 
-		if (!account || !account.status) return null
+		if (!account || account.status !== "ACTIVE") return null
 
 		if (account && account.password) {
 			const isValid = await this.hashComparer.compare(

@@ -82,8 +82,8 @@ test("Should have valid accesstoken", async () => {
 				email: "test@test.com",
 				username: "test user",
 				password: "test",
-				status: true,
-				role: role.data.id,
+				status: "ACTIVE",
+				roleId: role.data.id,
 				profile: {
 					firstName: "Test User",
 				},

@@ -33,7 +33,6 @@ test("Should create account with success", async () => {
 		input: {
 			email: "johndoe@mail.com",
 			username: "johndoe",
-			role: "admin",
 			profile: {
 				firstName: "John",
 			},

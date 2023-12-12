@@ -1,4 +1,7 @@
-import { CreateAccountRepository } from "@/data/protocols/repositories/users/create-account-repository"
+import {
+	CreateAccountRepository,
+	CreateAccountRepositoryInput,
+} from "@/data/protocols/repositories/users/create-account-repository"
 import { LoadAccountByEmailRepository } from "@/data/protocols/repositories/users/load-account-by-email-repository"
 import { LoadAccountByIdRepository } from "@/data/protocols/repositories/users/load-account-by-id-repository"
 import { LoadAccountByTokenRepository } from "@/data/protocols/repositories/users/load-account-by-token-repository"
@@ -17,7 +20,11 @@ import { LoadAccountsUseCaseFunction } from "@/domain/usecases/users/load-accoun
 import { DeleteAccountRepository } from "@/data/protocols/repositories/users/delete-account-repository"
 import { DeleteAccountUseCaseFn } from "@/domain/usecases/users/delete-account"
 import { UpdateAccountRepository } from "@/data/protocols/repositories/users/update-account-repository"
-import { UpdateAccountUseCase } from "@/domain/usecases/users/update-account"
+import {
+	UpdateAccountUseCase,
+	UpdateAccountUseCaseInput,
+	UpdateAccountUseCaseOutput,
+} from "@/domain/usecases/users/update-account"
 
 export class UsersRepository
 	implements
@@ -31,7 +38,7 @@ export class UsersRepository
 		DeleteAccountRepository,
 		UpdateAccountRepository
 {
-	create = async (input: CreateAccountRepository.Params) => {
+	create = async (input: CreateAccountRepositoryInput) => {
 		const result = await PrismaHelper.getCollection("users").create({
 			data: {
 				email: input.email,
@@ -40,12 +47,12 @@ export class UsersRepository
 				password: input.password,
 				username: input.username,
 				lastName: input.profile.lastName,
-				status: input.status,
+				status: input.status ?? "PENDING",
 				picture: input.profile.picture,
-				role: input.role
+				role: input.roleId
 					? {
 							connect: {
-								id: input.role,
+								id: input.roleId,
 							},
 					  }
 					: undefined,
@@ -65,7 +72,7 @@ export class UsersRepository
 				email: result.email,
 				password: result.password,
 				username: result.username,
-				roleId: result.role,
+				roleId: result.roleId,
 				status: result.status,
 				profile: {
 					firstName: result.firstName,
@@ -216,8 +223,8 @@ export class UsersRepository
 
 	updateAccount = async (
 		id: string,
-		input: UpdateAccountUseCase.Input
-	): Promise<UpdateAccountUseCase.Result> => {
+		input: UpdateAccountUseCaseInput
+	): Promise<UpdateAccountUseCaseOutput> => {
 		const result = await PrismaHelper.getCollection("users").update({
 			where: {
 				id,
@@ -227,10 +234,10 @@ export class UsersRepository
 				firstName: input?.profile?.firstName,
 				lastName: input?.profile?.lastName,
 				picture: input?.profile?.picture,
-				role: input?.role
+				role: input?.roleId
 					? {
 							connect: {
-								id: input?.role,
+								id: input?.roleId,
 							},
 					  }
 					: undefined,

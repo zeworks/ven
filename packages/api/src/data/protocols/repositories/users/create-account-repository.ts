@@ -1,15 +1,26 @@
-import { CreateAccountUseCase } from "@/domain/usecases/users/create-account"
+import {
+	CreateAccountUseCaseInput,
+	CreateAccountUseCaseOutput,
+} from "@/domain/usecases/users/create-account"
+import * as z from "zod"
+
+export const CreateAccountRepositoryInput = CreateAccountUseCaseInput.merge(
+	z.object({
+		id: z.string(),
+	})
+)
+
+export const CreateAccountRepositoryOutput = CreateAccountUseCaseOutput
 
 export interface CreateAccountRepository {
 	create: (
-		input: CreateAccountRepository.Params
-	) => Promise<CreateAccountRepository.Result>
+		input: CreateAccountRepositoryInput
+	) => Promise<CreateAccountRepositoryOutput>
 }
 
-export namespace CreateAccountRepository {
-	export type Params = CreateAccountUseCase.Params & {
-		id: string
-	}
-
-	export type Result = CreateAccountUseCase.Result
-}
+export type CreateAccountRepositoryInput = z.infer<
+	typeof CreateAccountRepositoryInput
+>
+export type CreateAccountRepositoryOutput = z.infer<
+	typeof CreateAccountRepositoryOutput
+>
