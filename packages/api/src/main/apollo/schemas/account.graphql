@@ -1,3 +1,9 @@
+enum Status {
+	PENDING
+	INACTIVE
+	ACTIVE
+}
+
 type AccountProfile {
 	firstName: String!
 	lastName: String
@@ -8,7 +14,7 @@ type Account {
 	id: String!
 	username: String!
 	email: String!
-	status: Boolean
+	status: Status
 	profile: AccountProfile
 	role: Role
 	accessToken: String
@@ -29,7 +35,7 @@ input UpdateAccountProfileInput {
 input CreateAccount {
 	username: String!
 	email: String!
-	status: Boolean
+	status: Status
 	password: String
 	profile: CreateAccountProfileInput!
 	role: String

@@ -6,7 +6,7 @@ export const Role = Base.merge(
 	z.object({
 		name: z.string(),
 		key: z.string(),
-		status: z.boolean().optional().default(true).nullable(),
+		status: z.boolean().default(true).optional().nullable(),
 		permissions: z.array(Permission).optional().nullable(),
 	})
 )
