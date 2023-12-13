@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Status {
+  PENDING
+  INACTIVE
+  ACTIVE
+}
+
 model Permissions {
   id        String    @id
   name      String    @db.VarChar(150)
@@ -39,7 +45,7 @@ model Users {
   username    String    @unique @db.VarChar(150)
   email       String    @unique @db.VarChar(150)
   password    String?   @db.VarChar(150)
-  status      Boolean   @default(false)
+  status      Status    @default(PENDING)
   firstName   String    @db.VarChar(250)
   lastName    String?   @db.VarChar(250)
   picture     String?   @db.LongText()

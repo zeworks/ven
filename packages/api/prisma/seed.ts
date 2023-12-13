@@ -57,7 +57,7 @@ async function main() {
 			firstName: "Admin",
 			username: "ven_admin",
 			password: await hash("ven", 8),
-			status: true,
+			status: "ACTIVE",
 			role: {
 				connect: {
 					id: admin_role.id,

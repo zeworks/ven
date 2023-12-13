@@ -11,9 +11,12 @@ import { LoadRoleByKeyController } from "./load-role-by-key-controller"
 test("Should load role by key with success", async () => {
 	const uuidAdapter = new UuidAdapter()
 	const rolesRepository = new InMemoryRolesRepository()
-	const dbCreateRole = new DbCreateRole(rolesRepository, rolesRepository)
-	const createRole = new CreateRoleController(
+	const dbCreateRole = new DbCreateRole(
 		uuidAdapter,
+		rolesRepository,
+		rolesRepository
+	)
+	const createRole = new CreateRoleController(
 		makeCreateRoleValidation(),
 		dbCreateRole
 	)

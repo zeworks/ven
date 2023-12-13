@@ -4,25 +4,30 @@ import { CreateRoleRepository } from "@/data/protocols/repositories/roles/create
 import {
 	CreateRoleUseCase,
 	CreateRoleUseCaseFunction,
+	CreateRoleUseCaseInput,
 } from "@/domain/usecases/roles/create-role"
+import { UuidAdapter } from "@/infra/cryptography/uuid"
 
 export class DbCreateRole implements CreateRoleUseCase {
 	constructor(
+		private readonly uuid: UuidAdapter,
 		private readonly checkRoleByKeyRepository: CheckRoleByKeyRepository,
 		private readonly createRoleRepository: CreateRoleRepository
 	) {}
 
 	create: CreateRoleUseCaseFunction = async (input) => {
-		try {
-			const keyExists = await this.checkRoleByKeyRepository.checkByKey(
-				input.key
-			)
+		const data = CreateRoleUseCaseInput.parse(input)
 
-			if (keyExists) throw new KeyInUseError(input.key)
+		try {
+			const keyExists = await this.checkRoleByKeyRepository.checkByKey(data.key)
+
+			if (keyExists) throw new KeyInUseError(data.key)
+
+			const id = await this.uuid.generate()
 
 			const role = await this.createRoleRepository.create({
 				...input,
-				status: input.status ?? true,
+				id,
 			})
 			return role
 		} catch (error: any) {

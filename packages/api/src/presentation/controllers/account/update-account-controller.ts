@@ -1,4 +1,8 @@
-import { UpdateAccountUseCase } from "@/domain/usecases/users/update-account"
+import {
+	UpdateAccountUseCase,
+	UpdateAccountUseCaseInput,
+	UpdateAccountUseCaseOutput,
+} from "@/domain/usecases/users/update-account"
 import { MissingParamError } from "@/presentation/errors/missing-param-error"
 import { badRequest, ok, serverError } from "@/presentation/helpers/http"
 import {
@@ -30,7 +34,7 @@ export class UpdateAccountController implements Controller {
 export namespace UpdateAccountController {
 	export type Input = {
 		id: string
-		input: UpdateAccountUseCase.Input
+		input: UpdateAccountUseCaseInput
 	}
-	export type Result = UpdateAccountUseCase.Result
+	export type Result = UpdateAccountUseCaseOutput
 }

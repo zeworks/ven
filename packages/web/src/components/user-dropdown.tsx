@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useSessionProvider } from "@/providers/session"
 
 export default function UserDropdown() {
-	const { session, clearSession } = useSessionProvider()
+	const { session, clearSession, isRoleAdmin } = useSessionProvider()
 	const navigate = useNavigate()
 
 	const onClearSession = () => {
@@ -72,6 +72,11 @@ export default function UserDropdown() {
 					<DropdownMenuItem asChild>
 						<Link to="">API Keys</Link>
 					</DropdownMenuItem>
+					{isRoleAdmin && (
+						<DropdownMenuItem asChild>
+							<Link to="settings">Settings</Link>
+						</DropdownMenuItem>
+					)}
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>

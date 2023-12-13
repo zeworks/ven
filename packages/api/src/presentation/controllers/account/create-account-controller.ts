@@ -1,5 +1,8 @@
 import { DbCreateAccount } from "@/data/usecases/users/db-create-account"
-import { CreateAccountUseCase } from "@/domain/usecases/users/create-account"
+import {
+	CreateAccountUseCaseInput,
+	CreateAccountUseCaseOutput,
+} from "@/domain/usecases/users/create-account"
 import { badRequest, ok, serverError } from "@/presentation/helpers/http"
 import { Controller } from "@/presentation/protocols/controller"
 import { HttpResponse } from "@/presentation/protocols/http"
@@ -28,8 +31,8 @@ export class CreateAccountController implements Controller {
 
 export namespace CreateAccountController {
 	export type RequestInput = {
-		input: CreateAccountUseCase.Params
+		input: CreateAccountUseCaseInput
 	}
 
-	export type Result = CreateAccountUseCase.Result
+	export type Result = CreateAccountUseCaseOutput
 }

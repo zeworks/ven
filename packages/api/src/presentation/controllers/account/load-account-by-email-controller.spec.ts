@@ -37,7 +37,7 @@ test("load account by email with success", async () => {
 			email: "test@test.com",
 			username: "user-test",
 			password: "user-test",
-			status: true,
+			status: "ACTIVE",
 			profile: {
 				firstName: "UserTest",
 			},

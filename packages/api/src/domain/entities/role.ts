@@ -1,9 +1,14 @@
+import * as z from "zod"
 import { Base } from "./base"
 import { Permission } from "./permission"
 
-export type Role = Base & {
-	name: string
-	key: string
-	status?: boolean
-	permissions?: Permission[] | null
-}
+export const Role = Base.merge(
+	z.object({
+		name: z.string(),
+		key: z.string(),
+		status: z.boolean().default(true).optional().nullable(),
+		permissions: z.array(Permission).optional().nullable(),
+	})
+)
+
+export type Role = z.infer<typeof Role>

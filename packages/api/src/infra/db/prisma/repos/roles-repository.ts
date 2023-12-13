@@ -1,5 +1,9 @@
 import { CheckRoleByKeyRepository } from "@/data/protocols/repositories/roles/check-role-by-key-respository"
-import { CreateRoleRepository } from "@/data/protocols/repositories/roles/create-role-repository"
+import {
+	CreateRoleRepository,
+	CreateRoleRepositoryInput,
+	CreateRoleRepositoryOutput,
+} from "@/data/protocols/repositories/roles/create-role-repository"
 import { LoadRoleByKeyRepository } from "@/data/protocols/repositories/roles/load-role-by-key-repository"
 import { CreateRoleUseCase } from "@/domain/usecases/roles/create-role"
 import { LoadRoleByKeyUseCaseFunction } from "@/domain/usecases/roles/load-role-by-key"
@@ -30,8 +34,8 @@ export class RolesRepository
 	}
 
 	create = async (
-		params: CreateRoleUseCase.Params
-	): Promise<CreateRoleUseCase.Result> => {
+		params: CreateRoleRepositoryInput
+	): Promise<CreateRoleRepositoryOutput> => {
 		return await PrismaHelper.getCollection("roles").create({
 			data: {
 				...params,

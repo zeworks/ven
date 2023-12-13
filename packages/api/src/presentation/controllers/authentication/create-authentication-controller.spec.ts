@@ -53,7 +53,7 @@ test("Should create authentication with success", async () => {
 			email: "johndoe@mail.com",
 			username: "johndoe",
 			password: "usernovo",
-			status: true,
+			status: "ACTIVE",
 			profile: {
 				firstName: "John",
 			},

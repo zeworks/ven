@@ -63,9 +63,12 @@ test("Should have valid accesstoken", async () => {
 		makeAuthMiddlewareValidation()
 	)
 
-	const dbCreateRole = new DbCreateRole(rolesRepository, rolesRepository)
-	const createRole = new CreateRoleController(
+	const dbCreateRole = new DbCreateRole(
 		uuidAdapter,
+		rolesRepository,
+		rolesRepository
+	)
+	const createRole = new CreateRoleController(
 		makeCreateRoleValidation(),
 		dbCreateRole
 	)
@@ -82,8 +85,8 @@ test("Should have valid accesstoken", async () => {
 				email: "test@test.com",
 				username: "test user",
 				password: "test",
-				status: true,
-				role: role.data.id,
+				status: "ACTIVE",
+				roleId: role.data.id,
 				profile: {
 					firstName: "Test User",
 				},

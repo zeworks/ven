@@ -7,6 +7,7 @@ import { UpdateAccountRepository } from "@/data/protocols/repositories/users/upd
 import {
 	UpdateAccountUseCase,
 	UpdateAccountUseCaseFn,
+	UpdateAccountUseCaseInput,
 } from "@/domain/usecases/users/update-account"
 
 export class DbUpdateAccount implements UpdateAccountUseCase {
@@ -17,7 +18,8 @@ export class DbUpdateAccount implements UpdateAccountUseCase {
 		private readonly updateAccountRepository: UpdateAccountRepository
 	) {}
 
-	update: UpdateAccountUseCaseFn = async (id, input) => {
+	update: UpdateAccountUseCaseFn = async (id, data) => {
+		const input = UpdateAccountUseCaseInput.parse(data)
 		try {
 			// validate account, find by account id
 			const account = await this.loadAccountIdUseCase.loadById(id)

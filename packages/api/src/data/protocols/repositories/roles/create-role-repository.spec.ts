@@ -2,11 +2,17 @@ import { test, expect } from "vitest"
 import { DbCreateRole } from "@/data/usecases/roles/create-role-usecase"
 import { InMemoryRolesRepository } from "./roles-repository-memory"
 import { faker } from "@faker-js/faker"
+import { UuidAdapter } from "@/infra/cryptography/uuid"
 
 const roleRepository = new InMemoryRolesRepository()
+const uuidAdapter = new UuidAdapter()
 
 const makeCreateRoleRepository = () => {
-	const createRole = new DbCreateRole(roleRepository, roleRepository)
+	const createRole = new DbCreateRole(
+		uuidAdapter,
+		roleRepository,
+		roleRepository
+	)
 
 	return {
 		createRole,
@@ -16,7 +22,6 @@ const makeCreateRoleRepository = () => {
 test("Should create role with success", async () => {
 	const { createRole } = makeCreateRoleRepository()
 	const role = {
-		id: faker.datatype.uuid(),
 		key: faker.random.word(),
 		name: faker.random.word(),
 		status: faker.datatype.boolean(),
@@ -29,7 +34,6 @@ test("Should create role with success", async () => {
 test("Should not role with duplicated key", async () => {
 	const { createRole } = makeCreateRoleRepository()
 	const role = {
-		id: faker.datatype.uuid(),
 		key: "key_name",
 		name: faker.random.word(),
 		status: faker.datatype.boolean(),

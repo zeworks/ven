@@ -5,7 +5,6 @@ import { CiLight, CiDark } from "react-icons/ci"
 import { useThemeProvider } from "@/providers/theme"
 import { Button } from "./ui/button"
 import { Icons } from "./icons"
-import { NavLink } from "./nav-link"
 import { ProjectSwitcher } from "./project-switcher"
 
 export function Header() {

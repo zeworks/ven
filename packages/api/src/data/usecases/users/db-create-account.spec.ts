@@ -34,4 +34,5 @@ test("Should create an account with success", async () => {
 	expect(result?.email).toEqual("email@test.com")
 	expect(result?.profile.firstName).toEqual("John Doe")
 	expect(result?.username).toEqual("JohnDoe")
+	expect(result?.status).toEqual("PENDING")
 })

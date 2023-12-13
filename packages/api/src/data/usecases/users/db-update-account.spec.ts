@@ -36,17 +36,18 @@ test("Should update first name and password", async () => {
 		email: "newuser@test.com",
 		password: "ola",
 		profile: {
-			firstName: faker.name.firstName(),
+			firstName: faker.name.fullName({ firstName: "John" }),
 		},
 		username: faker.name.middleName(),
 	})
 
 	if (account?.id) {
 		expect(account.profile.firstName).not.toBeNull()
+		expect(account.profile.firstName).contains("John")
 
 		const result = await dbUpdateAccount.update(account.id, {
 			...account,
-			role: account.role?.id,
+			roleId: account.role?.id,
 			profile: {
 				firstName: "José",
 			},
@@ -94,7 +95,7 @@ test("Should update the username", async () => {
 
 		const result = await dbUpdateAccount.update(account.id, {
 			...account,
-			role: account.role?.id,
+			roleId: account.role?.id,
 			username: "teste",
 		})
 
@@ -147,7 +148,7 @@ test("Should throw an error if username is already in use", async () => {
 		expect(
 			dbUpdateAccount.update(account.id, {
 				...account,
-				role: account.role?.id,
+				roleId: account.role?.id,
 				username: oldAccount?.username,
 			})
 		).rejects.toThrow(new UsernameInUseError())
