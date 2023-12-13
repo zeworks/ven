@@ -1,7 +1,7 @@
 import { SESSION_TOKEN_KEY } from "@/config/constants"
 import { useAuthenticationQuery } from "@/services/authentication"
 import { Account } from "@ven/graphql/dist/graphql"
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useMemo, useState } from "react"
 
 type Session = Account
 
@@ -33,6 +33,8 @@ export interface SessionContextObject {
 	hasAuthenticationToken: boolean
 
 	setStorageSessionToken: (token: string) => void
+
+	isRoleAdmin?: boolean
 }
 
 const initialState: SessionContextObject = {
@@ -42,6 +44,7 @@ const initialState: SessionContextObject = {
 	setStorageSessionToken: () => null,
 	isAuthenticated: false,
 	hasAuthenticationToken: false,
+	isRoleAdmin: false,
 }
 
 export const SessionContext = createContext<SessionContextObject>(initialState)
@@ -76,6 +79,11 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 		setSession(session)
 	}
 
+	const isRoleAdmin = useMemo(
+		() => session?.role?.key === "admin",
+		[session?.role?.key]
+	)
+
 	return (
 		<SessionContext.Provider
 			value={{
@@ -85,6 +93,7 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 				isAuthenticated,
 				hasAuthenticationToken,
 				setStorageSessionToken,
+				isRoleAdmin,
 			}}
 		>
 			{children}
