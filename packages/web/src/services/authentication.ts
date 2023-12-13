@@ -5,7 +5,6 @@ import {
 } from "@ven/graphql/dist/graphql"
 import http from "@/lib/http"
 import { useMutation, useQuery } from "react-query"
-import { SESSION_TOKEN_KEY } from "@/config/constants"
 
 export const useCreateAuthenticationMutation = () =>
 	useMutation(
@@ -14,7 +13,14 @@ export const useCreateAuthenticationMutation = () =>
 			http.request(CreateAuthenticationDocument, variables)
 	)
 
-export const useAuthenticationQuery = () =>
-	useQuery("authentication-query", () => http.request(AuthenticationDocument), {
-		enabled: !!localStorage.getItem(SESSION_TOKEN_KEY),
-	})
+export const useAuthenticationQuery = (token?: string) => {
+	if (token) http.setHeader(`authorization`, token)
+
+	return useQuery(
+		["authentication-query", token],
+		() => http.request(AuthenticationDocument),
+		{
+			enabled: !!token,
+		}
+	)
+}

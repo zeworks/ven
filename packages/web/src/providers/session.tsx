@@ -1,7 +1,14 @@
 import { SESSION_TOKEN_KEY } from "@/config/constants"
 import { useAuthenticationQuery } from "@/services/authentication"
 import { Account } from "@ven/graphql/dist/graphql"
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from "react"
 
 type Session = Account
 
@@ -50,7 +57,9 @@ const initialState: SessionContextObject = {
 export const SessionContext = createContext<SessionContextObject>(initialState)
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-	const authenticationQuery = useAuthenticationQuery()
+	const authenticationQuery = useAuthenticationQuery(
+		localStorage.getItem(SESSION_TOKEN_KEY) || ""
+	)
 
 	const [session, setSession] = useState<Session | undefined>(
 		initialState.session
@@ -66,10 +75,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
 			setSession(authenticationQuery.data.me as any)
 	}, [authenticationQuery.data?.me, hasAuthenticationToken])
 
-	const clearSession = () => {
+	const clearSession = useCallback(() => {
 		localStorage.removeItem(SESSION_TOKEN_KEY)
 		setSession(undefined)
-	}
+	}, [])
 
 	const setStorageSessionToken = (token: string) =>
 		localStorage.setItem(SESSION_TOKEN_KEY, token)
