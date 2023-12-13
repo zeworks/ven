@@ -1,8 +1,11 @@
 import { Role } from "@/domain/entities/role"
-import { CreateRoleUseCase } from "@/domain/usecases/roles/create-role"
 import { LoadRoleByKeyUseCaseFunction } from "@/domain/usecases/roles/load-role-by-key"
 import { CheckRoleByKeyRepository } from "./check-role-by-key-respository"
-import { CreateRoleRepository } from "./create-role-repository"
+import {
+	CreateRoleRepository,
+	CreateRoleRepositoryInput,
+	CreateRoleRepositoryOutput,
+} from "./create-role-repository"
 import { LoadRoleByKeyRepository } from "./load-role-by-key-repository"
 
 export class InMemoryRolesRepository
@@ -14,8 +17,8 @@ export class InMemoryRolesRepository
 	roles: Role[] = []
 
 	create = async (
-		params: CreateRoleUseCase.Params
-	): Promise<CreateRoleUseCase.Result> => {
+		params: CreateRoleRepositoryInput
+	): Promise<CreateRoleRepositoryOutput> => {
 		this.roles.push(params)
 		return this.roles[this.roles.length - 1]
 	}

@@ -11,12 +11,12 @@ const rolesRepository = new InMemoryRolesRepository()
 
 const makeCreateRoleController = (): Controller => {
 	const uuidAdapter = new UuidAdapter()
-	const createRoleUseCase = new DbCreateRole(rolesRepository, rolesRepository)
-	return new CreateRoleController(
+	const createRoleUseCase = new DbCreateRole(
 		uuidAdapter,
-		makeCreateRoleValidation(),
-		createRoleUseCase
+		rolesRepository,
+		rolesRepository
 	)
+	return new CreateRoleController(makeCreateRoleValidation(), createRoleUseCase)
 }
 
 test("Should create role with success", async () => {
