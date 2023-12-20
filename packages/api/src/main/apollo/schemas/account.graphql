@@ -14,8 +14,8 @@ type Account {
 	id: String!
 	username: String!
 	email: String!
-	status: Status
-	profile: AccountProfile
+	status: Status!
+	profile: AccountProfile!
 	role: Role
 	accessToken: String
 }
