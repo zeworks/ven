@@ -1,13 +1,41 @@
 query Authentication {
 	me {
-		...AccountFragment
+		id
+		username
+		email
+		status
+		profile {
+			firstName
+			lastName
+			picture
+		}
+		role {
+			id
+			name
+			key
+			status
+		}
 		accessToken
 	}
 }
 
 mutation CreateAuthentication($email: String, $password: String) {
 	createAuthentication(email: $email, password: $password) {
-		...AccountFragment
+		id
+		username
+		email
+		status
+		profile {
+			firstName
+			lastName
+			picture
+		}
+		role {
+			id
+			name
+			key
+			status
+		}
 		accessToken
 	}
 }

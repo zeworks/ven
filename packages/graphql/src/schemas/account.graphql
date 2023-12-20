@@ -2,7 +2,21 @@ query Accounts {
 	accounts {
 		total
 		data {
-			...AccountFragment
+			id
+			username
+			email
+			status
+			profile {
+				firstName
+				lastName
+				picture
+			}
+			role {
+				id
+				name
+				key
+				status
+			}
 		}
 	}
 }
@@ -13,6 +27,20 @@ query AccountByEmail($email: String!) {
 
 mutation CreateAccount($input: CreateAccount) {
 	createAccount(input: $input) {
-		...AccountFragment
+		id
+		username
+		email
+		status
+		profile {
+			firstName
+			lastName
+			picture
+		}
+		role {
+			id
+			name
+			key
+			status
+		}
 	}
 }
