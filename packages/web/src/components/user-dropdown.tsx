@@ -8,9 +8,10 @@ import {
 	DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
 import { Button } from "./ui/button"
-import { Avatar, AvatarImage } from "./ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Link, useNavigate } from "react-router-dom"
 import { useSessionProvider } from "@/providers/session"
+import { Route } from "@/config/types"
 
 export default function UserDropdown() {
 	const { session, clearSession, isRoleAdmin } = useSessionProvider()
@@ -28,21 +29,21 @@ export default function UserDropdown() {
 					variant="ghost"
 					className="relative h-8 w-8 select-none rounded-full bg-primary/10"
 				>
-					{session?.profile?.picture ? (
-						<Avatar className="h-8 w-8">
+					<Avatar className="h-8 w-8">
+						{session?.profile?.picture ? (
 							<AvatarImage
 								src={session?.profile?.picture || ""}
 								alt="user profile"
 							/>
-						</Avatar>
-					) : (
-						<div className="flex items-center justify-center w-100">
-							{[
-								session?.profile?.firstName[0],
-								session?.profile?.lastName?.[0],
-							].join(" ")}
-						</div>
-					)}
+						) : (
+							<AvatarFallback>
+								{[
+									session?.profile?.firstName[0],
+									session?.profile?.lastName?.[0],
+								].join("")}
+							</AvatarFallback>
+						)}
+					</Avatar>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56" align="end" forceMount>
@@ -61,7 +62,7 @@ export default function UserDropdown() {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem asChild>
-						<Link to="/settings">Profile</Link>
+						<Link to={Route.SettingsAccount}>Account</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem asChild>
 						<Link to="">My teams</Link>
@@ -74,7 +75,7 @@ export default function UserDropdown() {
 					</DropdownMenuItem>
 					{isRoleAdmin && (
 						<DropdownMenuItem asChild>
-							<Link to="settings">Settings</Link>
+							<Link to={Route.SettingsAccount}>Settings</Link>
 						</DropdownMenuItem>
 					)}
 				</DropdownMenuGroup>

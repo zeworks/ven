@@ -9,7 +9,9 @@ import {
 import { useMutation, useQuery } from "react-query"
 
 export const useGetAccountsQuery = () =>
-	useQuery("get-accounts", () => http.request(AccountsDocument))
+	useQuery("get-accounts", () => http.request(AccountsDocument), {
+		refetchOnWindowFocus: false,
+	})
 
 export const useGetAccountByEmailQuery = () =>
 	useMutation("get-account-by-email", (variables: QueryAccountByEmailArgs) =>
