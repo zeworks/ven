@@ -24,7 +24,8 @@ export class AuthMiddleware implements Middleware {
 				request.accessToken
 			)
 
-			if (account)
+			// only allow to authenticate ACTIVE users
+			if (account && account.status === "ACTIVE")
 				return ok({
 					accountId: account.id,
 					accountRole: account.role,
