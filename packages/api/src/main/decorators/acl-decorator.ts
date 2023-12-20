@@ -1,10 +1,9 @@
 import { AccountContext } from "@/config/account-context"
 import { Role } from "@/domain/entities/role"
 import { UnauthorizedError } from "@/presentation/errors/unauthorized-error"
-import { ok, serverError } from "@/presentation/helpers/http"
+import { serverError } from "@/presentation/helpers/http"
 import { Controller } from "@/presentation/protocols/controller"
 import { HttpResponse } from "@/presentation/protocols/http"
-import { MercuriusContext } from "mercurius"
 
 export class AclDecorator implements Controller {
 	constructor(
