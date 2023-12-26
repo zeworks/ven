@@ -9,6 +9,8 @@ export enum PermissionKey {
 	UsersUpdate = "permission_users_update",
 	UsersDelete = "permission_users_delete",
 	UsersView = "permission_users_view",
+	UsersDisable = "permission_users_disable",
+	UsersEnable = "permission_users_enable",
 	RolesCreate = "permission_roles_create",
 	RolesUpdate = "permission_roles_update",
 	RolesDelete = "permission_roles_delete",

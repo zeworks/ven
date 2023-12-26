@@ -30,6 +30,18 @@ export const PERMISSION_KEYS = [
 		parent: PERMISSION_PARENT_KEYS.ModuleUsers,
 		status: true,
 	},
+	{
+		name: "Disable User",
+		key: "permission_users_disable",
+		parent: PERMISSION_PARENT_KEYS.ModuleUsers,
+		status: true,
+	},
+	{
+		name: "Enable User",
+		key: "permission_users_enable",
+		parent: PERMISSION_PARENT_KEYS.ModuleUsers,
+		status: true,
+	},
 	//#endregion
 	//#region Roles
 	{
